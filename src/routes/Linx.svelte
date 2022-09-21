@@ -57,7 +57,7 @@
       <dt class="block underline">Original URL</dt>
       <dd>{link.original_url}</dd>
       <dt class="block underline">Expires</dt>
-      <dd>{link.expires_at}</dd>
+      <dd>{new Date(link.expires_at).toLocaleDateString()}</dd>
     </dl>
     <div class="flex flex-col">
       <a
