@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
 import Button from './Button';
 import ErrorCard from './ErrorCard';
-import Input from './Input';
+import Input from './TextField';
 
 export default function Login() {
   const [error, setError] = useState(null);
@@ -21,9 +21,9 @@ export default function Login() {
           <h1 className="text-center text-2xl">Login</h1>
           <hr className="my-3" />
           <form onSubmit={handleSubmit}>
-            <label htmlFor="email">Email</label>
             <Input
               name="email"
+              label='Email'
               type="email"
               id="email"
               className="block my-2.5 w-full"

@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
 import Button from './Button';
 import ErrorCard from './ErrorCard';
-import Input from './Input';
+import Input from './TextField';
 
 export default function Register() {
   const [error, setError] = useState(null);
@@ -25,9 +25,9 @@ export default function Register() {
           <h1 className=" text-center text-2xl">Register</h1>
           <hr className="my-3" />
           <form onSubmit={handleSubmit}>
-            <label htmlFor="name">Name</label>
             <Input
               name="name"
+              label='Name'
               type="text"
               id="name"
               className="block my-2 w-full"
@@ -41,9 +41,9 @@ export default function Register() {
               }}
             />
 
-            <label htmlFor="email">Email</label>
             <Input
               name="email"
+              label='Email'
               type="email"
               id="email"
               className="block my-2 w-full"
@@ -57,9 +57,9 @@ export default function Register() {
               }}
             />
 
-            <label htmlFor="password">Password</label>
             <Input
               name="password"
+              label='password'
               type="password"
               id="password"
               className="block my-2.5 w-full"

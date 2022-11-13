@@ -1,8 +1,9 @@
 import cn from 'classnames';
 import { ChangeEventHandler } from 'react';
 
-type Input = {
+type TextField = {
   name: string;
+  label: string
   id: string
   type: string
   placeholder: string
@@ -11,16 +12,19 @@ type Input = {
   className: string
 }
 
-export default function Input({
+export default function TextField({
   name,
+  label,
   id,
   type,
   placeholder,
   onChange,
   required = false,
   className,
-}:Input) {
+}:TextField) {
   return (
+    <>
+    <label htmlFor={id}>{label}</label>
     <input
       name={name}
       type={type}
@@ -33,5 +37,6 @@ export default function Input({
       onChange={onChange}
       required={required}
     />
+    </>
   );
 }
