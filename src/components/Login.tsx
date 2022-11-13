@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Button from './Button';
 import ErrorCard from './ErrorCard';
 import Input from './Input';
@@ -9,7 +9,7 @@ export default function Login() {
     email: '',
     password: '',
   });
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e:FormEvent) => {
     e.preventDefault();
 
     // TODO: send credentials to the server
