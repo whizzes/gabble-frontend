@@ -2,10 +2,10 @@ import cn from 'classnames';
 import { MouseEventHandler, ReactNode } from 'react';
 
 type Button = {
-  type: "button" | "submit" | "reset" | undefined;
-  className: string;
+  type?: "button" | "submit" | "reset";
+  className?: string;
   children: ReactNode;
-  onClick: MouseEventHandler | undefined;
+  onClick?: MouseEventHandler;
 };
 
 
