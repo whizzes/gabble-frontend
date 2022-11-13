@@ -11,6 +11,7 @@ export default function ErrorCard({ error, setError }:ErrorCard) {
       setError(null);
     }, 4000);
   }
+  
   return (
     <>
       {error ? (
