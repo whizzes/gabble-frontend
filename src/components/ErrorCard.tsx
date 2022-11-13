@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 
 type ErrorCard = {
   error: Error | null;
-  setError: any
+  setError: (arg0:String | Error | void | null | SetStateAction<Error | String | void | null>) => void;
 }
 
 export default function ErrorCard({ error, setError }:ErrorCard) {
@@ -11,7 +11,7 @@ export default function ErrorCard({ error, setError }:ErrorCard) {
       setError(null);
     }, 4000);
   }
-  
+
   return (
     <>
       {error ? (
