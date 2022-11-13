@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 
 type ErrorCard = {
   error: Error | null;
-  setError: Dispatch<SetStateAction<Error | null>>
+  setError: any
 }
 
 export default function ErrorCard({ error, setError }:ErrorCard) {
