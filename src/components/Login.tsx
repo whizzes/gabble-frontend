@@ -12,7 +12,7 @@ export default function Login() {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
 
-    console.log(credentials);
+    // TODO: send credentials to the server
   };
 
   return (
