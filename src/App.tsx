@@ -1,30 +1,24 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import { Index } from "./views/index";
-import { LoginView } from "./views/login";
-import { Signup } from "./views/signup";
+import { Index } from './views/index';
+import { LoginView } from './views/login';
+import { Signup } from './views/signup';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Index />,
   },
   {
-    path: "/login",
+    path: '/login',
     element: <LoginView />,
   },
   {
-    path: "/signup",
+    path: '/signup',
     element: <Signup />,
   },
 ]);
 
 export default function App() {
-  return (
-    <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 }

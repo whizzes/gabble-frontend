@@ -1,3 +1,1 @@
-export const Index: React.FC<{}> = () => (
-  <h1>Index</h1>
-);
+export const Index: React.FC = () => <h1>Index</h1>;

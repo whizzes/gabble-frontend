@@ -1,11 +1,18 @@
-import { Dispatch, SetStateAction } from "react";
+import { SetStateAction } from 'react';
 
-type ErrorCard = {
+type Props = {
   error: Error | null;
-  setError: (arg0:String | Error | void | null | SetStateAction<Error | String | void | null>) => void;
-}
+  setError: (
+    arg0:
+      | string
+      | Error
+      | void
+      | null
+      | SetStateAction<Error | string | void | null>
+  ) => void;
+};
 
-export default function ErrorCard({ error, setError }:ErrorCard) {
+export default function ErrorCard({ error, setError }: Props) {
   if (error) {
     setTimeout(() => {
       setError(null);
