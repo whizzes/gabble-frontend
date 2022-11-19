@@ -1,0 +1,26 @@
+name: Lint
+
+on:
+  - push
+  - pull_request
+  - workflow_dispatch
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v3
+
+      - name: Install PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Run ESLint and Prettier
+        run: pnpm run lint
