@@ -1,3 +1,5 @@
-export const Login: React.FC<{}> = () => (
-  <h1>Login</h1>
-);
+import Login from "../../components/Login";
+
+export const LoginView: React.FC<{}> = () => (
+  <Login />
+  );
