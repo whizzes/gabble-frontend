@@ -35,7 +35,7 @@ type AuthState = {
 
 export default function App(): JSX.Element {
   const urqlClient = createClient({
-    url: 'http://localhost:7878/graphql',
+    url: 'http://localhost:3000/graphql',
     exchanges: [
       dedupExchange,
       cacheExchange,

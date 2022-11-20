@@ -10,6 +10,7 @@ type Props = {
   type?: 'email' | 'text' | 'password' | 'number';
   placeholder?: string;
   required?: boolean;
+  error?: string;
   value: string;
   onChange: ChangeEventHandler | undefined;
 };
@@ -22,6 +23,7 @@ export default function TextField({
   placeholder,
   type = 'text',
   required = false,
+  error,
   value,
   onChange,
 }: Props) {
@@ -37,10 +39,12 @@ export default function TextField({
         id={id}
         required={required}
         value={value}
+        name={name}
         placeholder={placeholder}
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
         onChange={onChange}
       />
+      <p>{error}</p>
     </div>
   );
 }
