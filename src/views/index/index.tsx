@@ -1,1 +1,7 @@
-export const Index: React.FC = () => <h1>Index</h1>;
+import { LinkCreateForm } from '../../components/LinkCreateForm';
+
+export const Index: React.FC = () => (
+  <div>
+    <LinkCreateForm />
+  </div>
+);
