@@ -1,0 +1,7 @@
+mutation TokenCreate($email: String!, $password: String!) {
+  tokenCreate(email: $email, password: $password) {
+    token {
+      accessToken
+    }
+  }
+}
