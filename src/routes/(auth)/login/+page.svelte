@@ -4,7 +4,7 @@
 
   import { createHeader } from '$lib/utils/basic-auth';
 
-  const { handleSubmit, values, errors } = newForm({
+  const { handleSubmit, values } = newForm({
     initialValues: {
       email: '',
       password: ''
@@ -29,19 +29,47 @@
   });
 </script>
 
-<h1 class="text-3xl font-bold underline">Login</h1>
-
-<form on:submit={handleSubmit}>
-  <label for="email">Email</label>
-  <input
-    type="email"
-    name="email"
-    placeholder="E.g. user@email.com"
-    bind:value={$values.email}
-  />
-  <span hidden={!$errors.email}>{$errors.email}</span>
-  <label for="password">Password</label>
-  <input type="password" name="password" bind:value={$values.password} />
-  <span hidden={!$errors.password}>{$errors.password}</span>
-  <button type="submit">Login</button>
-</form>
+<div class="flex flex-1 flex-col items-center justify-center px-10 relative">
+  <div class="flex justify-between items-center w-full py-4">
+    <div class="flex items-center justify-start space-x-3">
+      <span class="bg-black rounded-full w-6 h-6" />
+      <a href="https://whizzes.io" class="font-medium text-lg"
+        >Whizzes.io + Linx</a
+      >
+    </div>
+    <div class="flex items-center space-x-2">
+      <span>Not a member? </span>
+      <a href="/signup" class="underline font-medium text-[#070eff]">
+        Create an account
+      </a>
+    </div>
+  </div>
+  <div class="flex flex-1 flex-col  justify-center space-y-5 max-w-md">
+    <div class="flex flex-col space-y-2 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold">Sign in to account</h2>
+      <p class="text-md md:text-xl">Sign in to access all your data!</p>
+    </div>
+    <form class="flex flex-col max-w-md space-y-5" on:submit={handleSubmit}>
+      <label for="email">Email</label>
+      <input
+        type="email"
+        name="email"
+        class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
+        placeholder="E.g. user@email.com"
+        bind:value={$values.email}
+      />
+      <label for="password">Password</label>
+      <input
+        type="password"
+        name="password"
+        class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
+        bind:value={$values.password}
+      />
+      <button
+        type="submit"
+        class="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white"
+        >Sign in</button
+      >
+    </form>
+  </div>
+</div>
