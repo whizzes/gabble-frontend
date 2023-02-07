@@ -3,8 +3,9 @@
   import * as Yup from 'yup';
 
   import { createHeader } from '$lib/utils/basic-auth';
+  import TextField from '$lib/components/TextField.svelte';
 
-  const { handleSubmit, values } = newForm({
+  const { handleSubmit, values, errors } = newForm({
     initialValues: {
       email: '',
       password: ''
@@ -49,21 +50,23 @@
       <h2 class="text-3xl md:text-4xl font-bold">Sign in to account</h2>
       <p class="text-md md:text-xl">Sign in to access all your data!</p>
     </div>
-    <form class="flex flex-col max-w-md space-y-5" on:submit={handleSubmit}>
-      <label for="email">Email</label>
-      <input
-        type="email"
+    <form class="flex flex-col w-full space-y-1" on:submit={handleSubmit}>
+      <TextField
+        type="text"
+        id="email"
         name="email"
-        class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
+        label="Email"
         placeholder="E.g. user@email.com"
         bind:value={$values.email}
+        error={$errors.email}
       />
-      <label for="password">Password</label>
-      <input
+      <TextField
         type="password"
+        id="password"
         name="password"
-        class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
+        label="Password"
         bind:value={$values.password}
+        error={$errors.password}
       />
       <button
         type="submit"
