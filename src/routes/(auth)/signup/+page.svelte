@@ -4,7 +4,7 @@
   import * as Yup from 'yup';
 
   import { CreateUserDocument } from '$lib/graphql/schema';
-    import TextField from '$lib/components/TextField.svelte';
+  import TextField from '$lib/components/TextField.svelte';
 
   let userCreatedOk = false;
   let error: string | null = null;
@@ -62,10 +62,41 @@
       </p>
     </div>
     <form class="flex flex-col max-w-md space-y-1" on:submit={handleSubmit}>
-      <TextField id="name" name="name" type="text" placeholder="E.g. John" label="Name" bind:value={$values.name} error={$errors.name}/>
-      <TextField id="lastName" name="lastName" type="text" placeholder="E.g. Appleseed" label="Last name" bind:value={$values.lastName} error={$errors.lastName}/>
-      <TextField id="email" name="email" type="email" placeholder="E.g. user@email.com" label="Email" bind:value={$values.email} error={$errors.email}/>
-      <TextField id="password" name="password" type="password" label="Password" bind:value={$values.password} error={$errors.password}/>
+      <TextField
+        id="name"
+        name="name"
+        type="text"
+        placeholder="E.g. John"
+        label="Name"
+        bind:value={$values.name}
+        error={$errors.name}
+      />
+      <TextField
+        id="lastName"
+        name="lastName"
+        type="text"
+        placeholder="E.g. Appleseed"
+        label="Last name"
+        bind:value={$values.lastName}
+        error={$errors.lastName}
+      />
+      <TextField
+        id="email"
+        name="email"
+        type="email"
+        placeholder="E.g. user@email.com"
+        label="Email"
+        bind:value={$values.email}
+        error={$errors.email}
+      />
+      <TextField
+        id="password"
+        name="password"
+        type="password"
+        label="Password"
+        bind:value={$values.password}
+        error={$errors.password}
+      />
 
       <button
         type="submit"

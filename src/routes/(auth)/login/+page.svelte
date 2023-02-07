@@ -3,7 +3,7 @@
   import * as Yup from 'yup';
 
   import { createHeader } from '$lib/utils/basic-auth';
-    import TextField from '$lib/components/TextField.svelte';
+  import TextField from '$lib/components/TextField.svelte';
 
   const { handleSubmit, values, errors } = newForm({
     initialValues: {
