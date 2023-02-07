@@ -4,6 +4,7 @@
   import * as Yup from 'yup';
 
   import { CreateUserDocument } from '$lib/graphql/schema';
+    import TextField from '$lib/components/TextField.svelte';
 
   let userCreatedOk = false;
   let error: string | null = null;
@@ -60,42 +61,12 @@
         Create an account to discover everything Linx has to offer!
       </p>
     </div>
-    <form class="flex flex-col max-w-md space-y-5" on:submit={handleSubmit}>
-      <label for="name">Name</label>
-      <input
-        type="text"
-        name="name"
-        placeholder="E.g. John"
-        class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
-        bind:value={$values.name}
-      />
-      <span hidden={!$errors.name}>{$errors.name}</span>
-      <label for="email">Last Name</label>
-      <input
-        type="text"
-        name="lastName"
-        placeholder="E.g. Appleseed"
-        class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
-        bind:value={$values.lastName}
-      />
-      <span hidden={!$errors.lastName}>{$errors.lastName}</span>
-      <label for="email">Email</label>
-      <input
-        type="email"
-        name="email"
-        placeholder="E.g. user@email.com"
-        class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
-        bind:value={$values.email}
-      />
-      <span hidden={!$errors.email}>{$errors.email}</span>
-      <label for="password">Password</label>
-      <input
-        type="password"
-        name="password"
-        bind:value={$values.password}
-        class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
-      />
-      <span hidden={!$errors.password}>{$errors.password}</span>
+    <form class="flex flex-col max-w-md space-y-1" on:submit={handleSubmit}>
+      <TextField id="name" name="name" type="text" placeholder="E.g. John" label="Name" bind:value={$values.name} error={$errors.name}/>
+      <TextField id="lastName" name="lastName" type="text" placeholder="E.g. Appleseed" label="Last name" bind:value={$values.lastName} error={$errors.lastName}/>
+      <TextField id="email" name="email" type="email" placeholder="E.g. user@email.com" label="Email" bind:value={$values.email} error={$errors.email}/>
+      <TextField id="password" name="password" type="password" label="Password" bind:value={$values.password} error={$errors.password}/>
+
       <button
         type="submit"
         class="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white"
