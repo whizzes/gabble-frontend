@@ -1,7 +1,7 @@
 <script lang="ts">
   import classNames from 'classnames';
 
-  let className: string = '';
+  let className = '';
   export { className as class };
 </script>
 

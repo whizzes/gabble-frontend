@@ -16,7 +16,8 @@
       dedupExchange,
       cacheExchange,
       authExchange<{ accessToken?: string }>({
-        getAuth: async ({ authState }) => {
+        getAuth: async () => {
+          // TODO: Not implemented yet
           return null;
         },
         addAuthToOperation: ({ authState, operation }) => {
