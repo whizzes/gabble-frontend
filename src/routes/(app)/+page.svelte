@@ -2,8 +2,8 @@
   import { page } from '$app/stores';
 </script>
 
-<div class="p-6">
-  <div class="flex flex-col mb-10">
+<div class="px-4 pt-6">
+  <div class="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
     Welcome back {$page.data.user.name}!
   </div>
 </div>
