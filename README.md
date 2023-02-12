@@ -15,3 +15,32 @@
 [![Downloads](https://img.shields.io/npm/dm/@whizzes/linx-dashboard.svg?style=flat)](https://www.npmjs.com/package/@whizzes/linx-dashboard)
 
 </div>
+
+## Development
+
+```bash
+# clone repository
+git clone git@github.com:whizzes/linx-dashboard.git
+
+# cd into the new directory
+cd ./linx-dashboard
+
+# create a `.env` file by copying contents from `.env.example`
+cp .env.example .env
+
+# install dependencies
+pnpm install
+
+# optional: make sure linx server is running
+lsof -i -P -n | grep LISTEN
+
+# run on development mode
+pnpm run dev:open
+
+# optional: if you don't want the browser to open-up automatically run
+# "pnpm run dev" instead
+```
+
+## License
+
+Licensed under the MIT License
