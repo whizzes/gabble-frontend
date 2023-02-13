@@ -99,7 +99,7 @@
         />
 
         <Button type="submit" disabled={$isSubmitting}
-          >Create your account</Button
+          >Create Account</Button
         >
         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
           Already have an account? <a
