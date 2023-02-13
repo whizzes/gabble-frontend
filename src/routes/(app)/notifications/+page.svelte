@@ -16,10 +16,5 @@
     <button on:click={notify}> click </button>
     <button on:click={notifyError}> error </button>
     <button on:click={notifyWarning}> Warning </button>
-    {#each $notifications.notifications as notif}
-      <li>
-        {notif.message}
-      </li>
-    {/each}
   </div>
   
