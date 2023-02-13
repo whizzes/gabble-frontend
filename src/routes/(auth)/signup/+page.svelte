@@ -54,9 +54,7 @@
       Whizzes.io + Linx
     </a>
     <Card class="w-full max-w-xl p-6 space-y-8 sm:p-8 dark:bg-gray-800">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-        Register
-      </h2>
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Register</h2>
       <form
         class="flex flex-col w-full mt-8 space-y-1"
         on:submit={handleSubmit}
@@ -98,9 +96,7 @@
           error={$errors.password}
         />
 
-        <Button type="submit" disabled={$isSubmitting}
-          >Create Account</Button
-        >
+        <Button type="submit" disabled={$isSubmitting}>Create Account</Button>
         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
           Already have an account? <a
             href="/login"
