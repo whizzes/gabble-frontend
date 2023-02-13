@@ -6,13 +6,13 @@
   import { CreateUserDocument } from '$lib/graphql/schema';
   import TextField from '$lib/components/TextField.svelte';
   import Card from '$lib/components/Card.svelte';
-    import Button from '$lib/components/Button.svelte';
+  import Button from '$lib/components/Button.svelte';
 
   let userCreatedOk = false;
   let error: string | null = null;
 
   const urqlClient = getContextClient();
-  const { handleSubmit, values, errors, isSubmitting} = newForm({
+  const { handleSubmit, values, errors, isSubmitting } = newForm({
     initialValues: {
       name: '',
       lastName: '',
@@ -54,7 +54,9 @@
       Whizzes.io + Linx
     </a>
     <Card class="w-full max-w-xl p-6 space-y-8 sm:p-8 dark:bg-gray-800">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Register in the platform</h2>
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+        Register in the platform
+      </h2>
       <form
         class="flex flex-col w-full mt-8 space-y-1"
         on:submit={handleSubmit}
@@ -96,7 +98,9 @@
           error={$errors.password}
         />
 
-        <Button type="submit" disabled={$isSubmitting}>Create your account</Button>
+        <Button type="submit" disabled={$isSubmitting}
+          >Create your account</Button
+        >
         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
           Already have an account? <a
             href="/login"

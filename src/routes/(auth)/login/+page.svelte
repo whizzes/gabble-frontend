@@ -71,12 +71,15 @@
           error={$errors.password}
         />
 
-        <Button type="submit" disabled={$isSubmitting}>Login to your account</Button>
+        <Button type="submit" disabled={$isSubmitting}
+          >Login to your account</Button
+        >
         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
           Not registered? <a
             href="/signup"
             class="text-primary-700 hover:underline dark:text-primary-500"
-            >Create account</a>
+            >Create account</a
+          >
         </div>
       </form>
     </Card>
