@@ -55,7 +55,7 @@
     </a>
     <Card class="w-full max-w-xl p-6 space-y-8 sm:p-8 dark:bg-gray-800">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-        Register in the platform
+        Register
       </h2>
       <form
         class="flex flex-col w-full mt-8 space-y-1"
