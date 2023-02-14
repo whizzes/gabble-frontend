@@ -1,4 +1,6 @@
 <script lang="ts">
+  import NotificationsList from '$lib/components/Notification/NotificationsList.svelte';
+
   import {
     dedupExchange,
     cacheExchange,
@@ -49,3 +51,4 @@
 </script>
 
 <slot />
+<NotificationsList />
