@@ -1,55 +1,60 @@
 <script lang="ts">
-    import classNames from 'classnames';
+  import classNames from 'classnames';
 
-      // import Icons here
-  
-    import notificationStore, { NotificationKind } from '$lib/stores/notification';
-  
-    import type { Notification } from '$lib/stores/notification';
-  
-    export let notification: Notification;
-  
-    let notificationClass: string;
-    let figureClass: string;
-  
-    $: {
-      notificationClass = classNames(
-        'flex gap-4 bg-white text-gray-600 shadow border p-2 rounded-md min-w-[200px] max-w-[350px] z-10',
-        notification.kind === NotificationKind.Success && 'border-green-400',
-        notification.kind === NotificationKind.Warning && 'border-amber-400',
-        notification.kind === NotificationKind.Failure && 'border-rose-400'
-      );
-  
-      figureClass = classNames(
-        'flex justify-center items-center h-12 w-12 rounded-md',
-        notification.kind === NotificationKind.Success &&
-          'text-green-600 bg-green-200 border-green-400',
-        notification.kind === NotificationKind.Warning &&
-          'text-amber-600 bg-amber-200 border-amber-400',
-        notification.kind === NotificationKind.Failure && 'text-rose-600 bg-rose-200 border-rose-400'
-      );
-    }
-  </script>
-  
-  <li class={notificationClass}>
-    <div class="flex space-x-4">
-        {#if notification.kind === NotificationKind.Success}
-          <h2>Success</h2>
-        {:else if notification.kind === NotificationKind.Warning}
-          <h2>Warning</h2>
-        {:else}
-          <h2>Error</h2>
-        {/if}
-    </div>
-    <div class="flex flex-col">
-      <span class="font-semibold">{notification.title}</span>
-      <p>{notification.message}</p>
-    </div>
-    <button
-      on:click={() => notificationStore.close(notification.id)}
-      class="flex justify-center items-center h-[24px] w-[24px] p-1 rounded-full hover:text-gray-200 cursor-pointer"
-    >
-        close
-    </button>
-  </li>
-  
+  import Check from '~icons/custom/check';
+  import Close from '~icons/custom/close';
+  import Warning from '~icons/custom/warning';
+
+  import notificationStore, {
+    NotificationKind
+  } from '$lib/stores/notification';
+
+  import type { Notification } from '$lib/stores/notification';
+
+  export let notification: Notification;
+
+  let notificationClass: string;
+  let figureClass: string;
+
+  $: {
+    notificationClass = classNames(
+      'flex gap-4 bg-white text-gray-600 shadow-lg p-4 rounded-md min-w-[200px] max-w-[350px] z-10',
+      notification.kind === NotificationKind.Success && '',
+      notification.kind === NotificationKind.Warning && '',
+      notification.kind === NotificationKind.Failure && ''
+    );
+
+    figureClass = classNames(
+      'flex justify-center items-center h-10 w-10 rounded-full',
+      notification.kind === NotificationKind.Success &&
+        'text-white bg-green-400',
+      notification.kind === NotificationKind.Warning &&
+        'text-white bg-amber-400 ',
+      notification.kind === NotificationKind.Failure && 'text-white bg-red-400'
+    );
+  }
+</script>
+
+<li class={notificationClass}>
+  <div class="flex space-x-4">
+    <figure class={figureClass}>
+      {#if notification.kind === NotificationKind.Success}
+        <Check class="h-6 w-6" />
+      {:else if notification.kind === NotificationKind.Warning}
+        <Warning class="h-6 w-6" />
+      {:else}
+        <Close class="h-6 w-6" />
+      {/if}
+    </figure>
+  </div>
+  <div class="flex flex-col">
+    <span class="font-semibold">{notification.title}</span>
+    <p>{notification.message}</p>
+  </div>
+  <button
+    on:click={() => notificationStore.close(notification.id)}
+    class="flex justify-center items-center h-[24px] w-[24px] p-1 rounded-full hover:text-gray-400 cursor-pointer"
+  >
+    <Close class="h-6 w-6" />
+  </button>
+</li>

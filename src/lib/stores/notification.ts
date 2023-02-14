@@ -91,13 +91,19 @@ export function createNotificationStore() {
   };
 
   const notifySuccess = (message: string, title?: string) =>
-    appendWithTimeout(newNotification(NotificationKind.Success, message, title || 'Success'));
+    appendWithTimeout(
+      newNotification(NotificationKind.Success, message, title || 'Success')
+    );
 
   const notifyFailure = (message: string, title?: string) =>
-    appendWithTimeout(newNotification(NotificationKind.Failure, message, title || 'Error'));
+    appendWithTimeout(
+      newNotification(NotificationKind.Failure, message, title || 'Error')
+    );
 
   const notifyWarning = (message: string, title?: string) =>
-    appendWithTimeout(newNotification(NotificationKind.Warning, message, title || 'Warning'));
+    appendWithTimeout(
+      newNotification(NotificationKind.Warning, message, title || 'Warning')
+    );
 
   const sorted = () => {
     const { notifications } = get(notificationStore);
@@ -116,7 +122,8 @@ export function createNotificationStore() {
   };
 }
 
-const notificationStore = createNotificationStore() as unknown as Readable<NotificationStore> &
-  NotificationStoreMethods;
+const notificationStore =
+  createNotificationStore() as unknown as Readable<NotificationStore> &
+    NotificationStoreMethods;
 
 export default notificationStore;
