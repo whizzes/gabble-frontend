@@ -93,15 +93,12 @@ export type TokenCreate = {
   token?: Maybe<AccessToken>;
 };
 
-/**
- * Platform User. A platform user may have priviledges for different
- * operations based on its `Role`.
- */
 export type User = {
   __typename?: 'User';
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   id: Scalars['ID'];
+  links: Array<Link>;
   linksIds: Array<Scalars['ID']>;
   name: Scalars['String'];
   surname: Scalars['String'];
@@ -147,6 +144,7 @@ export type GetCurrentUserQuery = {
       email: string;
       createdAt: any;
       updatedAt: any;
+      links: Array<{ __typename?: 'Link'; id: string; originalUrl: string }>;
     } | null;
   };
 };
@@ -159,6 +157,7 @@ export type CurrentUserFragment = {
   email: string;
   createdAt: any;
   updatedAt: any;
+  links: Array<{ __typename?: 'Link'; id: string; originalUrl: string }>;
 };
 
 export type TokenCreateMutationVariables = Exact<{
@@ -197,6 +196,10 @@ export const CurrentUserFragmentDoc = gql`
     name
     surname
     email
+    links {
+      id
+      originalUrl
+    }
     createdAt
     updatedAt
   }
