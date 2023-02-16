@@ -26,6 +26,36 @@ export type AccessToken = {
   accessToken: Scalars['String'];
 };
 
+export type Link = {
+  __typename?: 'Link';
+  id: Scalars['String'];
+  originalUrl: Scalars['String'];
+};
+
+export type LinkCreate = {
+  __typename?: 'LinkCreate';
+  error?: Maybe<LinkError>;
+  link?: Maybe<Link>;
+};
+
+export type LinkCreateInput = {
+  customHash?: InputMaybe<Scalars['String']>;
+  url: Scalars['String'];
+};
+
+export type LinkError = {
+  __typename?: 'LinkError';
+  code: LinkErrorCode;
+  message: Scalars['String'];
+};
+
+export enum LinkErrorCode {
+  CustomHashUsed = 'CUSTOM_HASH_USED',
+  InvalidUrl = 'INVALID_URL',
+  Unauthorized = 'UNAUTHORIZED',
+  Unknown = 'UNKNOWN'
+}
+
 export type Me = {
   __typename?: 'Me';
   error?: Maybe<UserError>;
@@ -34,9 +64,13 @@ export type Me = {
 
 export type MutationRoot = {
   __typename?: 'MutationRoot';
-  linkCreate: Scalars['Boolean'];
+  linkCreate: LinkCreate;
   tokenCreate: TokenCreate;
   userCreate: UserCreate;
+};
+
+export type MutationRootLinkCreateArgs = {
+  input: LinkCreateInput;
 };
 
 export type MutationRootTokenCreateArgs = {
@@ -50,7 +84,6 @@ export type MutationRootUserCreateArgs = {
 
 export type QueryRoot = {
   __typename?: 'QueryRoot';
-  linkList: Scalars['Boolean'];
   me: Me;
 };
 
@@ -60,15 +93,13 @@ export type TokenCreate = {
   token?: Maybe<AccessToken>;
 };
 
-/**
- * Platform User. A platform user may have priviledges for different
- * operations based on its `Role`.
- */
 export type User = {
   __typename?: 'User';
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   id: Scalars['ID'];
+  links: Array<Link>;
+  linksIds: Array<Scalars['ID']>;
   name: Scalars['String'];
   surname: Scalars['String'];
   updatedAt: Scalars['DateTime'];
@@ -82,9 +113,9 @@ export type UserCreate = {
 
 export type UserCreateInput = {
   email: Scalars['String'];
-  lastName: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];
+  surname: Scalars['String'];
 };
 
 export type UserError = {
@@ -113,6 +144,7 @@ export type GetCurrentUserQuery = {
       email: string;
       createdAt: any;
       updatedAt: any;
+      links: Array<{ __typename?: 'Link'; id: string; originalUrl: string }>;
     } | null;
   };
 };
@@ -125,6 +157,7 @@ export type CurrentUserFragment = {
   email: string;
   createdAt: any;
   updatedAt: any;
+  links: Array<{ __typename?: 'Link'; id: string; originalUrl: string }>;
 };
 
 export type TokenCreateMutationVariables = Exact<{
@@ -140,11 +173,11 @@ export type TokenCreateMutation = {
   };
 };
 
-export type CreateUserMutationVariables = Exact<{
+export type UserCreateMutationVariables = Exact<{
   input: UserCreateInput;
 }>;
 
-export type CreateUserMutation = {
+export type UserCreateMutation = {
   __typename?: 'MutationRoot';
   userCreate: {
     __typename?: 'UserCreate';
@@ -163,6 +196,10 @@ export const CurrentUserFragmentDoc = gql`
     name
     surname
     email
+    links {
+      id
+      originalUrl
+    }
     createdAt
     updatedAt
   }
@@ -186,8 +223,8 @@ export const TokenCreateDocument = gql`
     }
   }
 `;
-export const CreateUserDocument = gql`
-  mutation CreateUser($input: UserCreateInput!) {
+export const UserCreateDocument = gql`
+  mutation UserCreate($input: UserCreateInput!) {
     userCreate(input: $input) {
       user {
         id

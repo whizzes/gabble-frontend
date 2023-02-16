@@ -12,6 +12,10 @@ fragment CurrentUser on User {
   name
   surname
   email
+  links {
+    id
+    originalUrl
+  }
   createdAt
   updatedAt
 }

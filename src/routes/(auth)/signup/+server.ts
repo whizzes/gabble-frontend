@@ -1,4 +1,4 @@
-import { TokenCreateDocument } from '$lib/graphql/schema';
+import { TokenCreateDocument, UserCreateDocument } from '$lib/graphql/schema';
 import { createClient } from '@urql/core';
 
 import { parseHeader } from '$lib/utils/basic-auth';
@@ -6,19 +6,23 @@ import { parseHeader } from '$lib/utils/basic-auth';
 import type { Cookies } from '@sveltejs/kit';
 import type { Client } from '@urql/core';
 import type { AccessToken } from '$lib/graphql/schema';
+import { createToken } from '$auth/login/+server';
 
-export async function createToken(
+export type CreateUserPayload = {
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+};
+
+async function createUser(
   urqlClient: Client,
-  email: string,
-  password: string
-): Promise<AccessToken> {
+  payload: CreateUserPayload
+): Promise<{ id: string }> {
   const response = await urqlClient
     .mutation(
-      TokenCreateDocument,
-      {
-        email,
-        password
-      },
+      UserCreateDocument,
+      { input: payload },
       {
         requestPolicy: 'network-only'
       }
@@ -26,8 +30,8 @@ export async function createToken(
     .toPromise();
 
   if (response?.error || response?.data?.tokenCreate?.error) {
-    if (response?.data?.tokenCreate?.error) {
-      const error = response?.data?.tokenCreate?.error;
+    if (response?.data?.userCreate?.error) {
+      const error = response?.data?.userCreate?.error;
 
       throw new Error(error);
     }
@@ -35,7 +39,7 @@ export async function createToken(
     throw response?.error;
   }
 
-  return response?.data?.tokenCreate?.token;
+  return response?.data?.userCreate?.user;
 }
 
 export const POST = async ({
@@ -46,23 +50,17 @@ export const POST = async ({
   request: Request;
 }) => {
   try {
-    const { username, password } = parseHeader(request);
-
-    if (!username || !password) {
-      return new Response(
-        JSON.stringify({
-          message: 'Missing username and/or password credentials'
-        }),
-        {
-          status: 422
-        }
-      );
-    }
-
+    const requestBody: CreateUserPayload = await request.json();
     const urqlClient = createClient({
       url: import.meta.env.VITE_LINX_GRAPHQL_URL
     });
-    const tokens = await createToken(urqlClient, username, password);
+    await createUser(urqlClient, requestBody);
+
+    const tokens = await createToken(
+      urqlClient,
+      requestBody.email,
+      requestBody.password
+    );
 
     if (tokens.accessToken) {
       cookies.set('accessToken', tokens.accessToken, {
