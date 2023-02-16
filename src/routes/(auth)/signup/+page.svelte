@@ -1,9 +1,7 @@
 <script lang="ts">
-  import { getContextClient } from '@urql/svelte';
   import { newForm } from '@whizzes/svelte-forms';
   import * as Yup from 'yup';
 
-  import { CreateUserDocument } from '$lib/graphql/schema';
   import TextField from '$lib/components/TextField.svelte';
   import Card from '$lib/components/Card.svelte';
   import Button from '$lib/components/Button.svelte';
@@ -11,11 +9,10 @@
   let userCreatedOk = false;
   let error: string | null = null;
 
-  const urqlClient = getContextClient();
   const { handleSubmit, values, errors, isSubmitting } = newForm({
     initialValues: {
       name: '',
-      lastName: '',
+      surname: '',
       email: '',
       password: ''
     },
@@ -25,17 +22,13 @@
       password: Yup.string().required()
     }),
     onSubmit: async (values) => {
-      const response = await urqlClient
-        .mutation(CreateUserDocument, {
-          input: values
-        })
-        .toPromise();
+      const response = await fetch('/signup', {
+        method: 'POST',
+        body: JSON.stringify(values)
+      });
 
-      if (response.data?.userCreate?.user) {
-        userCreatedOk = true;
-      } else {
-        // TODO: Provide error handling support
-        error = 'Failed to register user!';
+      if (response.ok) {
+        window.location.pathname = '/';
       }
     }
   });
@@ -69,13 +62,13 @@
           error={$errors.name}
         />
         <TextField
-          id="lastName"
-          name="lastName"
+          id="surname"
+          name="surname"
           type="text"
           placeholder="E.g. Appleseed"
           label="Last name"
-          bind:value={$values.lastName}
-          error={$errors.lastName}
+          bind:value={$values.surname}
+          error={$errors.surname}
         />
         <TextField
           id="email"
