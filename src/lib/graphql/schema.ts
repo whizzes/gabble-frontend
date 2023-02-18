@@ -1,9 +1,15 @@
 import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -65,17 +71,14 @@ export type MutationRoot = {
   userCreate: UserCreate;
 };
 
-
 export type MutationRootLinkCreateArgs = {
   input: LinkCreateInput;
 };
-
 
 export type MutationRootTokenCreateArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
 };
-
 
 export type MutationRootUserCreateArgs = {
   input: UserCreateInput;
@@ -129,72 +132,123 @@ export enum UserErrorCode {
   Unknown = 'UNKNOWN'
 }
 
-export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
 
+export type GetCurrentUserQuery = {
+  __typename?: 'QueryRoot';
+  me: {
+    __typename?: 'Me';
+    user?: {
+      __typename?: 'User';
+      id: string;
+      name: string;
+      surname: string;
+      email: string;
+      createdAt: any;
+      updatedAt: any;
+      links: Array<{
+        __typename?: 'Link';
+        id: string;
+        originalUrl: string;
+        updatedAt: any;
+        createdAt: any;
+      }>;
+    } | null;
+  };
+};
 
-export type GetCurrentUserQuery = { __typename?: 'QueryRoot', me: { __typename?: 'Me', user?: { __typename?: 'User', id: string, name: string, surname: string, email: string, createdAt: any, updatedAt: any, links: Array<{ __typename?: 'Link', id: string, originalUrl: string, updatedAt: any, createdAt: any }> } | null } };
-
-export type CurrentUserFragment = { __typename?: 'User', id: string, name: string, surname: string, email: string, createdAt: any, updatedAt: any, links: Array<{ __typename?: 'Link', id: string, originalUrl: string, updatedAt: any, createdAt: any }> };
+export type CurrentUserFragment = {
+  __typename?: 'User';
+  id: string;
+  name: string;
+  surname: string;
+  email: string;
+  createdAt: any;
+  updatedAt: any;
+  links: Array<{
+    __typename?: 'Link';
+    id: string;
+    originalUrl: string;
+    updatedAt: any;
+    createdAt: any;
+  }>;
+};
 
 export type TokenCreateMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
 
-
-export type TokenCreateMutation = { __typename?: 'MutationRoot', tokenCreate: { __typename?: 'TokenCreate', token?: { __typename?: 'AccessToken', accessToken: string } | null } };
+export type TokenCreateMutation = {
+  __typename?: 'MutationRoot';
+  tokenCreate: {
+    __typename?: 'TokenCreate';
+    token?: { __typename?: 'AccessToken'; accessToken: string } | null;
+  };
+};
 
 export type UserCreateMutationVariables = Exact<{
   input: UserCreateInput;
 }>;
 
-
-export type UserCreateMutation = { __typename?: 'MutationRoot', userCreate: { __typename?: 'UserCreate', user?: { __typename?: 'User', id: string } | null, error?: { __typename?: 'UserError', code: UserErrorCode, message: string } | null } };
+export type UserCreateMutation = {
+  __typename?: 'MutationRoot';
+  userCreate: {
+    __typename?: 'UserCreate';
+    user?: { __typename?: 'User'; id: string } | null;
+    error?: {
+      __typename?: 'UserError';
+      code: UserErrorCode;
+      message: string;
+    } | null;
+  };
+};
 
 export const CurrentUserFragmentDoc = gql`
-    fragment CurrentUser on User {
-  id
-  name
-  surname
-  email
-  links {
+  fragment CurrentUser on User {
     id
-    originalUrl
-    updatedAt
-    createdAt
-  }
-  createdAt
-  updatedAt
-}
-    `;
-export const GetCurrentUserDocument = gql`
-    query GetCurrentUser {
-  me {
-    user {
-      ...CurrentUser
-    }
-  }
-}
-    ${CurrentUserFragmentDoc}`;
-export const TokenCreateDocument = gql`
-    mutation TokenCreate($email: String!, $password: String!) {
-  tokenCreate(email: $email, password: $password) {
-    token {
-      accessToken
-    }
-  }
-}
-    `;
-export const UserCreateDocument = gql`
-    mutation UserCreate($input: UserCreateInput!) {
-  userCreate(input: $input) {
-    user {
+    name
+    surname
+    email
+    links {
       id
+      originalUrl
+      updatedAt
+      createdAt
     }
-    error {
-      code
-      message
+    createdAt
+    updatedAt
+  }
+`;
+export const GetCurrentUserDocument = gql`
+  query GetCurrentUser {
+    me {
+      user {
+        ...CurrentUser
+      }
     }
   }
-}
-    `;
+  ${CurrentUserFragmentDoc}
+`;
+export const TokenCreateDocument = gql`
+  mutation TokenCreate($email: String!, $password: String!) {
+    tokenCreate(email: $email, password: $password) {
+      token {
+        accessToken
+      }
+    }
+  }
+`;
+export const UserCreateDocument = gql`
+  mutation UserCreate($input: UserCreateInput!) {
+    userCreate(input: $input) {
+      user {
+        id
+      }
+      error {
+        code
+        message
+      }
+    }
+  }
+`;
