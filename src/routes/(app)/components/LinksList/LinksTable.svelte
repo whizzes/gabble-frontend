@@ -1,8 +1,6 @@
 <script>
   import { page } from '$app/stores';
   import TableItem from './TableItem.svelte';
-
-  console.log($page.data.user.links);
 </script>
 
 <div class="flex flex-col mt-6">
@@ -23,6 +21,12 @@
                 class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white"
               >
                 URL
+              </th>
+              <th
+                scope="col"
+                class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white"
+              >
+                Created At
               </th>
             </tr>
           </thead>
