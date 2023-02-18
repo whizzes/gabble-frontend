@@ -1,7 +1,6 @@
 <script>
   import { page } from '$app/stores';
   import TableItem from './TableItem.svelte';
-  const date = new Date();
 
   console.log($page.data.user.links);
 </script>
