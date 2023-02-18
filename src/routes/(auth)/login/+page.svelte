@@ -6,6 +6,7 @@
   import TextField from '$lib/components/TextField.svelte';
   import Card from '$lib/components/Card.svelte';
   import Button from '$lib/components/Button.svelte';
+  import notification from '$lib/stores/notification';
 
   const { handleSubmit, values, errors, isSubmitting } = newForm({
     initialValues: {
@@ -17,17 +18,22 @@
       password: Yup.string().required()
     }),
     onSubmit: async ({ email, password }) => {
-      const basicAuth = createHeader(email, password);
-      const response = await fetch('/login', {
-        method: 'POST',
-        headers: {
-          Authorization: basicAuth
-        }
-      });
+      setTimeout(async () => {
+        const basicAuth = createHeader(email, password);
+        const response = await fetch('/login', {
+          method: 'POST',
+          headers: {
+            Authorization: basicAuth
+          }
+        });
 
-      if (response.ok) {
-        window.location.pathname = '/';
-      }
+        if (response.ok) {
+          notification.notifySuccess('Logged in successfully');
+          window.location.pathname = '/';
+        } else {
+          notification.notifyFailure('Failed to login, try again');
+        }
+      }, 2000);
     }
   });
 </script>
