@@ -28,8 +28,10 @@ export type AccessToken = {
 
 export type Link = {
   __typename?: 'Link';
+  createdAt: Scalars['DateTime'];
   id: Scalars['String'];
   originalUrl: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type LinkCreate = {
@@ -144,7 +146,13 @@ export type GetCurrentUserQuery = {
       email: string;
       createdAt: any;
       updatedAt: any;
-      links: Array<{ __typename?: 'Link'; id: string; originalUrl: string }>;
+      links: Array<{
+        __typename?: 'Link';
+        id: string;
+        originalUrl: string;
+        updatedAt: any;
+        createdAt: any;
+      }>;
     } | null;
   };
 };
@@ -157,7 +165,13 @@ export type CurrentUserFragment = {
   email: string;
   createdAt: any;
   updatedAt: any;
-  links: Array<{ __typename?: 'Link'; id: string; originalUrl: string }>;
+  links: Array<{
+    __typename?: 'Link';
+    id: string;
+    originalUrl: string;
+    updatedAt: any;
+    createdAt: any;
+  }>;
 };
 
 export type TokenCreateMutationVariables = Exact<{
@@ -199,6 +213,8 @@ export const CurrentUserFragmentDoc = gql`
     links {
       id
       originalUrl
+      updatedAt
+      createdAt
     }
     createdAt
     updatedAt
