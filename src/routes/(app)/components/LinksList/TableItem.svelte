@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let link: { id: string; originalUrl: string, createdAt: Date};
+  export let link: { id: string; originalUrl: string; createdAt: Date };
 </script>
 
 <tr>
@@ -13,9 +13,9 @@
   >
     {link.originalUrl}
   </td>
-<td
-class="p-4 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white"
->
-{link.createdAt}
-</td>
+  <td
+    class="p-4 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white"
+  >
+    {link.createdAt}
+  </td>
 </tr>
