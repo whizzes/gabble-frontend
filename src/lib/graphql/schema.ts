@@ -132,6 +132,28 @@ export enum UserErrorCode {
   Unknown = 'UNKNOWN'
 }
 
+export type LinkCreateMutationVariables = Exact<{
+  input: LinkCreateInput;
+}>;
+
+export type LinkCreateMutation = {
+  __typename?: 'MutationRoot';
+  linkCreate: {
+    __typename?: 'LinkCreate';
+    link?: {
+      __typename?: 'Link';
+      id: string;
+      originalUrl: string;
+      createdAt: any;
+    } | null;
+    error?: {
+      __typename?: 'LinkError';
+      code: LinkErrorCode;
+      message: string;
+    } | null;
+  };
+};
+
 export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetCurrentUserQuery = {
@@ -218,6 +240,21 @@ export const CurrentUserFragmentDoc = gql`
     }
     createdAt
     updatedAt
+  }
+`;
+export const LinkCreateDocument = gql`
+  mutation linkCreate($input: LinkCreateInput!) {
+    linkCreate(input: $input) {
+      link {
+        id
+        originalUrl
+        createdAt
+      }
+      error {
+        code
+        message
+      }
+    }
   }
 `;
 export const GetCurrentUserDocument = gql`
