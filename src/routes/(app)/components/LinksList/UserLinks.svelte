@@ -1,8 +1,9 @@
 <script>
+  import Card from '$lib/components/Card.svelte';
   import LinksTable from './LinksTable.svelte';
 </script>
 
-<div
+<Card
   class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800"
 >
   <!-- Card header -->
@@ -18,4 +19,4 @@
   </div>
   <!-- Table -->
   <LinksTable />
-</div>
+</Card>

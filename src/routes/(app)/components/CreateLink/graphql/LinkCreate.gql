@@ -1,0 +1,17 @@
+mutation linkCreate($input: LinkCreateInput!) {
+  linkCreate(input: $input) {
+    link {
+      ...Link
+    }
+    error {
+      code
+      message
+    }
+  }
+}
+
+fragment Link on Link {
+  id
+  originalUrl
+  createdAt
+}
