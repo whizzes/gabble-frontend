@@ -62,7 +62,7 @@
           name="url"
           type="text"
           id="url"
-          label="URL*"
+          label="URL"
           placeholder="https://example.com/"
           bind:value={$values.url}
           error={$errors.url}
