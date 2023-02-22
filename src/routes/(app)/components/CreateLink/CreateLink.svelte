@@ -83,7 +83,7 @@
 
     <div class="flex justify-end">
       <Button type="submit" disabled={$isSubmitting} class="bg-blue-700"
-        >Create short!</Button
+        >Create link</Button
       >
     </div>
   </form>
