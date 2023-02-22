@@ -11,7 +11,6 @@
   import { LinkCreateDocument } from '$lib/graphql/schema';
 
   const urqlClient = getContextClient();
-
   const { handleSubmit, values, errors, isSubmitting } = newForm({
     initialValues: {
       url: '',
