@@ -20,18 +20,19 @@
     onSubmit: async ({ email, password }) => {
       setTimeout(async () => {
         const basicAuth = createHeader(email, password);
-        const response = await fetch('/login', {
+        const request = await fetch('/login', {
           method: 'POST',
           headers: {
             Authorization: basicAuth
           }
         });
 
-        if (response.ok) {
+        if (request.ok) {
           notification.notifySuccess('Logged in successfully');
           window.location.pathname = '/';
         } else {
-          notification.notifyFailure('Failed to login, try again');
+          const response = await request.json();
+          notification.notifyFailure(response.message);
         }
       }, 2000);
     }
