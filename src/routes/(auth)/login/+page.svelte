@@ -18,22 +18,20 @@
       password: Yup.string().required()
     }),
     onSubmit: async ({ email, password }) => {
-      setTimeout(async () => {
-        const basicAuth = createHeader(email, password);
-        const response = await fetch('/login', {
-          method: 'POST',
-          headers: {
-            Authorization: basicAuth
-          }
-        });
-
-        if (response.ok) {
-          notification.notifySuccess('Logged in successfully');
-          window.location.pathname = '/';
-        } else {
-          notification.notifyFailure('Failed to login, try again');
+      const basicAuth = createHeader(email, password);
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          Authorization: basicAuth
         }
-      }, 2000);
+      });
+
+      if (response.ok) {
+        notification.notifySuccess('Logged in successfully');
+        window.location.pathname = '/';
+      } else {
+        notification.notifyFailure('Failed to login, try again');
+      }
     }
   });
 </script>
