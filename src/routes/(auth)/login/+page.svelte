@@ -14,27 +14,26 @@
       password: ''
     },
     validationSchema: Yup.object({
-      email: Yup.string().email().required(),
-      password: Yup.string().required()
+      email: Yup.string().email(),
+      password: Yup.string()
     }),
     onSubmit: async ({ email, password }) => {
-      setTimeout(async () => {
         const basicAuth = createHeader(email, password);
         const request = await fetch('/login', {
           method: 'POST',
           headers: {
             Authorization: basicAuth
           }
-        });
+        })
 
         if (request.ok) {
           notification.notifySuccess('Logged in successfully');
           window.location.pathname = '/';
         } else {
-          const response = await request.json();
-          notification.notifyFailure(response.message);
+          const response = await request.json()
+          notification.notifyFailure(response.message)
+          
         }
-      }, 2000);
     }
   });
 </script>

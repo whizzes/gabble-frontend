@@ -3,5 +3,9 @@ mutation TokenCreate($email: String!, $password: String!) {
     token {
       accessToken
     }
+    error {
+      code
+      message
+    }
   }
 }

@@ -27,9 +27,9 @@ export async function createToken(
 
   if (response?.error || response?.data?.tokenCreate?.error) {
     if (response?.data?.tokenCreate?.error) {
-      const error = response?.data?.tokenCreate?.error;
+      const error = response?.data?.tokenCreate;
 
-      throw new Error(error);
+      return error;
     }
 
     throw response?.error;
@@ -77,6 +77,10 @@ export const POST = async ({
       return new Response(null, {
         status: 201
       });
+    }
+
+    if (tokens.error) {
+      return new Response(JSON.stringify(tokens.error), { status: 401 });
     }
 
     return new Response(
