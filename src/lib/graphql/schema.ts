@@ -24,7 +24,6 @@ export type Scalars = {
 export type AccessToken = {
   __typename?: 'AccessToken';
   accessToken: Scalars['String'];
-  error: Scalars['String'];
 };
 
 export type Link = {
