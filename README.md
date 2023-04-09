@@ -1,12 +1,13 @@
 <div>
-  <h1 align="center">Linx Dashboard</h1>
+  <h1 align="center">Quicklink Dashboard</h1>
   <h4 align="center">
-    Dashboard for Linx a Headless URL Shortener written in Rust
+    Dashboard for Quicklink a Headless URL Shortener written in Rust
   </h4>
 </div>
 
 <div align="center">
 
+[![Discord](https://img.shields.io/discord/1011702194925490186?color=blue&label=discord&logo=discord)](https://discord.gg/yde6mcgs2C)
 ![Build](https://github.com/whizzes/linx-dashboard/workflows/build/badge.svg)
 ![Tests](https://github.com/whizzes/linx-dashboard/workflows/test/badge.svg)
 ![Lint](https://github.com/whizzes/linx-dashboard/workflows/lint/badge.svg)
