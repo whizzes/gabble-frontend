@@ -27,7 +27,7 @@ export async function createToken(
 
   if (response?.error || response?.data?.tokenCreate?.error) {
     if (response?.data?.tokenCreate?.error) {
-      const error = response?.data?.tokenCreate?.error;
+      const error = response.data.tokenCreate.error;
 
       throw error;
     }
