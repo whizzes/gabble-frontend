@@ -14,8 +14,8 @@
       password: ''
     },
     validationSchema: Yup.object({
-      email: Yup.string().email(),
-      password: Yup.string()
+      email: Yup.string().email().required(),
+      password: Yup.string().required()
     }),
     onSubmit: async ({ email, password }) => {
       const basicAuth = createHeader(email, password);
@@ -31,7 +31,15 @@
         window.location.pathname = '/';
       } else {
         const response = await request.json();
-        notification.notifyFailure(response.message);
+        if (response.error === 'missing_credentials') {
+          notification.notifyFailure('Please enter your email and password');
+        } else if (response.error === 'UNAUTHORIZED') {
+          notification.notifyFailure('Invalid email or password');
+        } else {
+          notification.notifyFailure(
+            'An error occurred. Please try again later.'
+          );
+        }
       }
     }
   });

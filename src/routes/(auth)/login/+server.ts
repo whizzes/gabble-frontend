@@ -27,9 +27,9 @@ export async function createToken(
 
   if (response?.error || response?.data?.tokenCreate?.error) {
     if (response?.data?.tokenCreate?.error) {
-      const error = response?.data?.tokenCreate;
+      const error = response?.data?.tokenCreate?.error;
 
-      return error;
+      throw error;
     }
 
     throw response?.error;
@@ -51,6 +51,7 @@ export const POST = async ({
     if (!username || !password) {
       return new Response(
         JSON.stringify({
+          error: 'missing_credentials',
           message: 'Missing username and/or password credentials'
         }),
         {
@@ -79,12 +80,9 @@ export const POST = async ({
       });
     }
 
-    if (tokens.error) {
-      return new Response(JSON.stringify(tokens.error), { status: 401 });
-    }
-
     return new Response(
       JSON.stringify({
+        error: 'invalid_credentials',
         message: 'Invalid Credentials'
       }),
       {
@@ -96,8 +94,8 @@ export const POST = async ({
 
     return new Response(
       JSON.stringify({
-        message: 'Internal Server Error',
-        error: (err as { message: string })?.message
+        error: (err as { message: string; code: string })?.code,
+        message: (err as { message: string; code: string })?.message
       }),
       {
         status: 500
