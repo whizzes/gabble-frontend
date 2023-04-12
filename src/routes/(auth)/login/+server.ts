@@ -1,8 +1,4 @@
-import {
-  TokenCreateDocument,
-  UserErrorCode,
-  type UserError
-} from '$lib/graphql/schema';
+import { TokenCreateDocument, type UserError } from '$lib/graphql/schema';
 import { createClient } from '@urql/core';
 
 import { parseHeader } from '$lib/utils/basic-auth';

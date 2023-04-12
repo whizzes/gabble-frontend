@@ -7,6 +7,8 @@
   import Card from '$lib/components/Card.svelte';
   import Button from '$lib/components/Button.svelte';
   import notification from '$lib/stores/notification';
+  import { LoginError } from './shared';
+  import { UserErrorCode } from '$lib/graphql/schema';
 
   const { handleSubmit, values, errors, isSubmitting } = newForm({
     initialValues: {
@@ -31,9 +33,9 @@
         window.location.pathname = '/';
       } else {
         const response = await request.json();
-        if (response.error === 'missing_credentials') {
+        if (response.error === LoginError.MissingCredentials) {
           notification.notifyFailure('Please enter your email and password');
-        } else if (response.error === 'UNAUTHORIZED') {
+        } else if (response.error === UserErrorCode.Unauthorized) {
           notification.notifyFailure('Invalid email or password');
         } else {
           notification.notifyFailure(
