@@ -1,4 +1,8 @@
-import { TokenCreateDocument } from '$lib/graphql/schema';
+import {
+  TokenCreateDocument,
+  UserErrorCode,
+  type UserError
+} from '$lib/graphql/schema';
 import { createClient } from '@urql/core';
 
 import { parseHeader } from '$lib/utils/basic-auth';
@@ -6,6 +10,7 @@ import { parseHeader } from '$lib/utils/basic-auth';
 import type { Cookies } from '@sveltejs/kit';
 import type { Client } from '@urql/core';
 import type { AccessToken } from '$lib/graphql/schema';
+import { LoginError } from './shared';
 
 export async function createToken(
   urqlClient: Client,
@@ -27,7 +32,7 @@ export async function createToken(
 
   if (response?.error || response?.data?.tokenCreate?.error) {
     if (response?.data?.tokenCreate?.error) {
-      const error = response.data.tokenCreate.error;
+      const error: UserError = response.data.tokenCreate.error;
 
       throw error;
     }
@@ -51,7 +56,7 @@ export const POST = async ({
     if (!username || !password) {
       return new Response(
         JSON.stringify({
-          error: 'missing_credentials',
+          error: LoginError.MissingCredentials,
           message: 'Missing username and/or password credentials'
         }),
         {
@@ -79,16 +84,6 @@ export const POST = async ({
         status: 201
       });
     }
-
-    return new Response(
-      JSON.stringify({
-        error: 'invalid_credentials',
-        message: 'Invalid Credentials'
-      }),
-      {
-        status: 403
-      }
-    );
   } catch (err) {
     console.error(err);
 
