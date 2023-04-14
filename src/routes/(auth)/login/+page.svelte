@@ -21,6 +21,7 @@
     }),
     onSubmit: async ({ email, password }) => {
       const basicAuth = createHeader(email, password);
+
       const request = await fetch('/login', {
         method: 'POST',
         headers: {
