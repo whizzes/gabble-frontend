@@ -1,11 +1,11 @@
-import { TokenCreateDocument, type UserError } from '$lib/graphql/schema';
+import { TokenCreateDocument } from '$lib/graphql/schema';
 import { createClient } from '@urql/core';
 
 import { parseHeader } from '$lib/utils/basic-auth';
 
 import type { Cookies } from '@sveltejs/kit';
 import type { Client } from '@urql/core';
-import type { AccessToken } from '$lib/graphql/schema';
+import type { AccessToken, UserError } from '$lib/graphql/schema';
 import { LoginError } from './shared';
 
 export async function createToken(

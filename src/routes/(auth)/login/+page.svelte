@@ -7,7 +7,7 @@
   import Card from '$lib/components/Card.svelte';
   import Button from '$lib/components/Button.svelte';
   import notification from '$lib/stores/notification';
-  import { LoginError } from './shared';
+  import { LoginError, type ErrorMessages } from './shared';
   import { UserErrorCode } from '$lib/graphql/schema';
 
   const { handleSubmit, values, errors, isSubmitting } = newForm({
@@ -34,15 +34,17 @@
         window.location.pathname = '/';
       } else {
         const response = await request.json();
-        if (response.error === LoginError.MissingCredentials) {
-          notification.notifyFailure('Please enter your email and password');
-        } else if (response.error === UserErrorCode.Unauthorized) {
-          notification.notifyFailure('Invalid email or password');
-        } else {
-          notification.notifyFailure(
-            'An error occurred. Please try again later.'
-          );
-        }
+        const errorMessages: ErrorMessages = {
+          [LoginError.MissingCredentials]:
+            'Please enter your email and password',
+          [UserErrorCode.Unauthorized]: 'Invalid email or password',
+          default: 'An error occurred. Please try again later.'
+        };
+        const errorMessage =
+          errorMessages[response.error as keyof typeof errorMessages] ||
+          errorMessages.default;
+
+        notification.notifyFailure(errorMessage);
       }
     }
   });
