@@ -10,6 +10,11 @@
   import { LoginError, type ErrorMessages } from './shared';
   import { UserErrorCode } from '$lib/graphql/schema';
 
+  const errorMessages: ErrorMessages = {
+    [LoginError.MissingCredentials]: 'Please enter your email and password',
+    [UserErrorCode.Unauthorized]: 'Invalid email or password'
+  };
+
   const { handleSubmit, values, errors, isSubmitting } = newForm({
     initialValues: {
       email: '',
@@ -22,27 +27,22 @@
     onSubmit: async ({ email, password }) => {
       const basicAuth = createHeader(email, password);
 
-      const request = await fetch('/login', {
+      const response = await fetch('/login', {
         method: 'POST',
         headers: {
           Authorization: basicAuth
         }
       });
 
-      if (request.ok) {
+      if (response.ok) {
         notification.notifySuccess('Logged in successfully');
         window.location.pathname = '/';
       } else {
-        const response = await request.json();
-        const errorMessages: ErrorMessages = {
-          [LoginError.MissingCredentials]:
-            'Please enter your email and password',
-          [UserErrorCode.Unauthorized]: 'Invalid email or password',
-          default: 'An error occurred. Please try again later.'
-        };
+        const data = await response.json();
+
         const errorMessage =
-          errorMessages[response.error as keyof typeof errorMessages] ||
-          errorMessages.default;
+          errorMessages[data.error as keyof typeof errorMessages] ||
+          'An error occurred. Please try again later.';
 
         notification.notifyFailure(errorMessage);
       }
