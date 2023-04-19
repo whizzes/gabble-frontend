@@ -7,6 +7,13 @@
   import Card from '$lib/components/Card.svelte';
   import Button from '$lib/components/Button.svelte';
   import notification from '$lib/stores/notification';
+  import { LoginError, type ErrorMessages } from './shared';
+  import { UserErrorCode } from '$lib/graphql/schema';
+
+  const errorMessages: ErrorMessages = {
+    [LoginError.MissingCredentials]: 'Please enter your email and password',
+    [UserErrorCode.Unauthorized]: 'Invalid email or password'
+  };
 
   const { handleSubmit, values, errors, isSubmitting } = newForm({
     initialValues: {
@@ -19,6 +26,7 @@
     }),
     onSubmit: async ({ email, password }) => {
       const basicAuth = createHeader(email, password);
+
       const response = await fetch('/login', {
         method: 'POST',
         headers: {
@@ -30,7 +38,13 @@
         notification.notifySuccess('Logged in successfully');
         window.location.pathname = '/';
       } else {
-        notification.notifyFailure('Failed to login, try again');
+        const data = await response.json();
+
+        const errorMessage =
+          errorMessages[data.error as keyof typeof errorMessages] ||
+          'An error occurred. Please try again later.';
+
+        notification.notifyFailure(errorMessage);
       }
     }
   });

@@ -213,6 +213,11 @@ export type TokenCreateMutation = {
   tokenCreate: {
     __typename?: 'TokenCreate';
     token?: { __typename?: 'AccessToken'; accessToken: string } | null;
+    error?: {
+      __typename?: 'UserError';
+      code: UserErrorCode;
+      message: string;
+    } | null;
   };
 };
 
@@ -285,6 +290,10 @@ export const TokenCreateDocument = gql`
     tokenCreate(email: $email, password: $password) {
       token {
         accessToken
+      }
+      error {
+        code
+        message
       }
     }
   }
