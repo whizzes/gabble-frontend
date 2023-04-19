@@ -8,9 +8,9 @@
 <div align="center">
 
 [![Discord](https://img.shields.io/discord/1011702194925490186?color=blue&label=discord&logo=discord)](https://discord.gg/yde6mcgs2C)
-![Build](https://github.com/whizzes/linx-dashboard/workflows/build/badge.svg)
-![Tests](https://github.com/whizzes/linx-dashboard/workflows/test/badge.svg)
-![Lint](https://github.com/whizzes/linx-dashboard/workflows/lint/badge.svg)
+![Build](https://github.com/whizzes/quicklink-dashboard/workflows/build/badge.svg)
+![Tests](https://github.com/whizzes/quicklink-dashboard/workflows/test/badge.svg)
+![Lint](https://github.com/whizzes/quicklink-dashboard/workflows/lint/badge.svg)
 
 </div>
 
@@ -18,10 +18,10 @@
 
 ```bash
 # clone repository
-git clone git@github.com:whizzes/linx-dashboard.git
+git clone git@github.com:whizzes/quicklink-dashboard.git
 
 # cd into the new directory
-cd ./linx-dashboard
+cd ./quicklink-dashboard
 
 # create a `.env` file by copying contents from `.env.example`
 cp .env.example .env
@@ -29,7 +29,7 @@ cp .env.example .env
 # install dependencies
 pnpm install
 
-# optional: make sure linx server is running
+# optional: make sure quicklink server is running
 lsof -i -P -n | grep LISTEN
 
 # run on development mode
