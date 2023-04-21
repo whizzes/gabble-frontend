@@ -16,6 +16,9 @@
 
 ## Development
 
+> We use [Bun.sh][1] to run this project. We recommend you install it to
+> contribute w/o any issues. `npm i -g bun`
+
 ```bash
 # clone repository
 git clone git@github.com:whizzes/quicklink-dashboard.git
@@ -42,3 +45,5 @@ bun run dev:open
 ## License
 
 Licensed under the MIT License
+
+[1]: https://bun.sh
