@@ -27,16 +27,16 @@ cd ./quicklink-dashboard
 cp .env.example .env
 
 # install dependencies
-pnpm install
+bun i
 
 # optional: make sure quicklink server is running
 lsof -i -P -n | grep LISTEN
 
 # run on development mode
-pnpm run dev:open
+bun run dev:open
 
 # optional: if you don't want the browser to open-up automatically run
-# "pnpm run dev" instead
+# "bun run dev" instead
 ```
 
 ## License
