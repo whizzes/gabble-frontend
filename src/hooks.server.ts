@@ -40,7 +40,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     }
 
     const urqlClient = createClient({
-      url: import.meta.env.VITE_LINX_GRAPHQL_URL
+      url: import.meta.env.VITE_GRAPHQL_URL
     });
     const userDetials = await getUserDetails(urqlClient, accessToken);
 

@@ -26,12 +26,12 @@ export type AccessToken = {
   accessToken: Scalars['String'];
 };
 
+/** A Link record used to redirect to the underlying `original_url` */
 export type Link = {
   __typename?: 'Link';
-  createdAt: Scalars['DateTime'];
-  id: Scalars['String'];
+  id: Scalars['ID'];
   originalUrl: Scalars['String'];
-  updatedAt: Scalars['DateTime'];
+  ulid: Scalars['String'];
 };
 
 export type LinkCreate = {
@@ -41,7 +41,7 @@ export type LinkCreate = {
 };
 
 export type LinkCreateInput = {
-  customHash?: InputMaybe<Scalars['String']>;
+  ulid?: InputMaybe<Scalars['String']>;
   url: Scalars['String'];
 };
 
@@ -52,10 +52,9 @@ export type LinkError = {
 };
 
 export enum LinkErrorCode {
-  CustomHashUsed = 'CUSTOM_HASH_USED',
-  InvalidUrl = 'INVALID_URL',
-  Unauthorized = 'UNAUTHORIZED',
-  Unknown = 'UNKNOWN'
+  Internal = 'INTERNAL',
+  Pxid = 'PXID',
+  UlidParse = 'ULID_PARSE'
 }
 
 export type Me = {
@@ -68,7 +67,7 @@ export type MutationRoot = {
   __typename?: 'MutationRoot';
   linkCreate: LinkCreate;
   tokenCreate: TokenCreate;
-  userCreate: UserCreate;
+  userRegister: UserRegister;
 };
 
 export type MutationRootLinkCreateArgs = {
@@ -80,8 +79,8 @@ export type MutationRootTokenCreateArgs = {
   password: Scalars['String'];
 };
 
-export type MutationRootUserCreateArgs = {
-  input: UserCreateInput;
+export type MutationRootUserRegisterArgs = {
+  input: UserRegisterInput;
 };
 
 export type QueryRoot = {
@@ -95,29 +94,20 @@ export type TokenCreate = {
   token?: Maybe<AccessToken>;
 };
 
+/** A Platform's User */
 export type User = {
   __typename?: 'User';
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   id: Scalars['ID'];
+  /**
+   * Retrieves links for `User` instance, if and only if the `User` instance
+   * belongs to the currently authenticated user.
+   */
   links: Array<Link>;
-  linksIds: Array<Scalars['ID']>;
   name: Scalars['String'];
   surname: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-};
-
-export type UserCreate = {
-  __typename?: 'UserCreate';
-  error?: Maybe<UserError>;
-  user?: Maybe<User>;
-};
-
-export type UserCreateInput = {
-  email: Scalars['String'];
-  name: Scalars['String'];
-  password: Scalars['String'];
-  surname: Scalars['String'];
 };
 
 export type UserError = {
@@ -128,9 +118,23 @@ export type UserError = {
 
 export enum UserErrorCode {
   EmailTaken = 'EMAIL_TAKEN',
-  Unauthorized = 'UNAUTHORIZED',
-  Unknown = 'UNKNOWN'
+  Internal = 'INTERNAL',
+  InvalidEmail = 'INVALID_EMAIL',
+  Unauthorized = 'UNAUTHORIZED'
 }
+
+export type UserRegister = {
+  __typename?: 'UserRegister';
+  error?: Maybe<UserError>;
+  user?: Maybe<User>;
+};
+
+export type UserRegisterInput = {
+  email: Scalars['String'];
+  name: Scalars['String'];
+  password: Scalars['String'];
+  surname: Scalars['String'];
+};
 
 export type LinkCreateMutationVariables = Exact<{
   input: LinkCreateInput;
@@ -143,8 +147,8 @@ export type LinkCreateMutation = {
     link?: {
       __typename?: 'Link';
       id: string;
+      ulid: string;
       originalUrl: string;
-      createdAt: any;
     } | null;
     error?: {
       __typename?: 'LinkError';
@@ -157,8 +161,8 @@ export type LinkCreateMutation = {
 export type LinkFragment = {
   __typename?: 'Link';
   id: string;
+  ulid: string;
   originalUrl: string;
-  createdAt: any;
 };
 
 export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
@@ -178,9 +182,8 @@ export type GetCurrentUserQuery = {
       links: Array<{
         __typename?: 'Link';
         id: string;
+        ulid: string;
         originalUrl: string;
-        updatedAt: any;
-        createdAt: any;
       }>;
     } | null;
   };
@@ -197,9 +200,8 @@ export type CurrentUserFragment = {
   links: Array<{
     __typename?: 'Link';
     id: string;
+    ulid: string;
     originalUrl: string;
-    updatedAt: any;
-    createdAt: any;
   }>;
 };
 
@@ -222,13 +224,13 @@ export type TokenCreateMutation = {
 };
 
 export type UserCreateMutationVariables = Exact<{
-  input: UserCreateInput;
+  input: UserRegisterInput;
 }>;
 
 export type UserCreateMutation = {
   __typename?: 'MutationRoot';
-  userCreate: {
-    __typename?: 'UserCreate';
+  userRegister: {
+    __typename?: 'UserRegister';
     user?: { __typename?: 'User'; id: string } | null;
     error?: {
       __typename?: 'UserError';
@@ -241,8 +243,8 @@ export type UserCreateMutation = {
 export const LinkFragmentDoc = gql`
   fragment Link on Link {
     id
+    ulid
     originalUrl
-    createdAt
   }
 `;
 export const CurrentUserFragmentDoc = gql`
@@ -251,14 +253,13 @@ export const CurrentUserFragmentDoc = gql`
     name
     surname
     email
-    links {
-      id
-      originalUrl
-      updatedAt
-      createdAt
-    }
     createdAt
     updatedAt
+    links {
+      id
+      ulid
+      originalUrl
+    }
   }
 `;
 export const LinkCreateDocument = gql`
@@ -299,8 +300,8 @@ export const TokenCreateDocument = gql`
   }
 `;
 export const UserCreateDocument = gql`
-  mutation UserCreate($input: UserCreateInput!) {
-    userCreate(input: $input) {
+  mutation UserCreate($input: UserRegisterInput!) {
+    userRegister(input: $input) {
       user {
         id
       }

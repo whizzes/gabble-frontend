@@ -13,7 +13,7 @@
   import '../app.css';
 
   const client = createClient({
-    url: import.meta.env.VITE_LINX_GRAPHQL_URL,
+    url: import.meta.env.VITE_GRAPHQL_URL,
     exchanges: [
       dedupExchange,
       cacheExchange,

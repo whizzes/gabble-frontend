@@ -13,13 +13,15 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v3
 
-      - name: Install PNPM
-        uses: pnpm/action-setup@v2
+      - name: Setup Bun.sh
+        uses: antongolub/action-setup-bun@v1
         with:
-          version: 7
+          bun-version: 0.5.9
 
       - name: Install Dependencies
-        run: pnpm install
+        run: bun i
 
-      - name: Run ESLint and Prettier
-        run: pnpm run build
+      - name: Run Build Script
+        env:
+          BUN_ENV: production
+        run: bun run build

@@ -1,5 +1,5 @@
 overwrite: true
-schema: ${VITE_LINX_GRAPHQL_URL}
+schema: ${VITE_GRAPHQL_URL}
 documents:
   - 'src/**/*.gql'
 generates:

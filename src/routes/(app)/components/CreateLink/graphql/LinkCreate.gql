@@ -12,6 +12,6 @@ mutation linkCreate($input: LinkCreateInput!) {
 
 fragment Link on Link {
   id
+  ulid
   originalUrl
-  createdAt
 }

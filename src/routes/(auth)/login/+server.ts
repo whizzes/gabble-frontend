@@ -62,7 +62,7 @@ export const POST = async ({
     }
 
     const urqlClient = createClient({
-      url: import.meta.env.VITE_LINX_GRAPHQL_URL
+      url: import.meta.env.VITE_GRAPHQL_URL
     });
     const tokens = await createToken(urqlClient, username, password);
 
