@@ -37,9 +37,9 @@
       >
         <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
           <div class="truncate">
-            {$page.data.user.name + ' ' + $page.data.user.surname}!
+            {$page.data.user.name + ' ' + $page.data.user.surname}
           </div>
-          <div class="font-medium truncate">{$page.data.user.email}!</div>
+          <div class="font-medium truncate">{$page.data.user.email}</div>
         </div>
         <div class="py-2">
           <a

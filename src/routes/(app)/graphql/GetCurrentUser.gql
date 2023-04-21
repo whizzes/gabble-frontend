@@ -15,8 +15,15 @@ fragment CurrentUser on User {
   createdAt
   updatedAt
   links {
-    id
-    ulid
-    originalUrl
+    ...UserLinks
   }
+}
+
+fragment UserLinks on Link {
+  id
+  ulid
+  originalUrl
+  createdAt
+  updatedAt
+  deletedAt
 }

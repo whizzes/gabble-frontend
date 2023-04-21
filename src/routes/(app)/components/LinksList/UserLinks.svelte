@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Card from '$lib/components/Card.svelte';
   import LinksTable from './LinksTable.svelte';
 </script>
@@ -12,9 +12,6 @@
       <h3 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">
         Links
       </h3>
-      <span class="text-base font-normal text-gray-500 dark:text-gray-400"
-        >This is the list of the links created</span
-      >
     </div>
   </div>
   <!-- Table -->

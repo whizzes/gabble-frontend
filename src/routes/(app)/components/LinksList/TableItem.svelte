@@ -1,5 +1,8 @@
 <script lang="ts">
-  export let link: { id: string; originalUrl: string; createdAt: Date };
+  import type { UserLinksFragment } from '$lib/graphql/schema';
+
+  export let link: UserLinksFragment;
+
   const linkCreatedAt = new Date(link.createdAt);
 </script>
 
@@ -7,12 +10,16 @@
   <td
     class="p-4 text-sm font-semibold text-gray-900 whitespace-nowrap dark:text-gray-400"
   >
-    {link.id}
+    <code>
+      {link.ulid}
+    </code>
   </td>
   <td
     class="p-4 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white"
   >
-    {link.originalUrl}
+    <a href={link.originalUrl} target="_blank" class="underline text-blue-300">
+      {link.originalUrl}
+    </a>
   </td>
   <td
     class="p-4 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white"

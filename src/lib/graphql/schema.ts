@@ -29,9 +29,12 @@ export type AccessToken = {
 /** A Link record used to redirect to the underlying `original_url` */
 export type Link = {
   __typename?: 'Link';
+  createdAt: Scalars['DateTime'];
+  deletedAt?: Maybe<Scalars['DateTime']>;
   id: Scalars['ID'];
   originalUrl: Scalars['String'];
   ulid: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type LinkCreate = {
@@ -158,7 +161,7 @@ export type LinkCreateMutation = {
   };
 };
 
-export type LinkFragment = {
+export type CreatedLinkFragment = {
   __typename?: 'Link';
   id: string;
   ulid: string;
@@ -184,6 +187,9 @@ export type GetCurrentUserQuery = {
         id: string;
         ulid: string;
         originalUrl: string;
+        createdAt: any;
+        updatedAt: any;
+        deletedAt?: any | null;
       }>;
     } | null;
   };
@@ -202,7 +208,20 @@ export type CurrentUserFragment = {
     id: string;
     ulid: string;
     originalUrl: string;
+    createdAt: any;
+    updatedAt: any;
+    deletedAt?: any | null;
   }>;
+};
+
+export type UserLinksFragment = {
+  __typename?: 'Link';
+  id: string;
+  ulid: string;
+  originalUrl: string;
+  createdAt: any;
+  updatedAt: any;
+  deletedAt?: any | null;
 };
 
 export type TokenCreateMutationVariables = Exact<{
@@ -240,11 +259,21 @@ export type UserCreateMutation = {
   };
 };
 
-export const LinkFragmentDoc = gql`
-  fragment Link on Link {
+export const CreatedLinkFragmentDoc = gql`
+  fragment CreatedLink on Link {
     id
     ulid
     originalUrl
+  }
+`;
+export const UserLinksFragmentDoc = gql`
+  fragment UserLinks on Link {
+    id
+    ulid
+    originalUrl
+    createdAt
+    updatedAt
+    deletedAt
   }
 `;
 export const CurrentUserFragmentDoc = gql`
@@ -256,17 +285,16 @@ export const CurrentUserFragmentDoc = gql`
     createdAt
     updatedAt
     links {
-      id
-      ulid
-      originalUrl
+      ...UserLinks
     }
   }
+  ${UserLinksFragmentDoc}
 `;
 export const LinkCreateDocument = gql`
   mutation linkCreate($input: LinkCreateInput!) {
     linkCreate(input: $input) {
       link {
-        ...Link
+        ...CreatedLink
       }
       error {
         code
@@ -274,7 +302,7 @@ export const LinkCreateDocument = gql`
       }
     }
   }
-  ${LinkFragmentDoc}
+  ${CreatedLinkFragmentDoc}
 `;
 export const GetCurrentUserDocument = gql`
   query GetCurrentUser {

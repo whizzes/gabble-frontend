@@ -1,7 +1,7 @@
 mutation linkCreate($input: LinkCreateInput!) {
   linkCreate(input: $input) {
     link {
-      ...Link
+      ...CreatedLink
     }
     error {
       code
@@ -10,7 +10,7 @@ mutation linkCreate($input: LinkCreateInput!) {
   }
 }
 
-fragment Link on Link {
+fragment CreatedLink on Link {
   id
   ulid
   originalUrl

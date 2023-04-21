@@ -11,21 +11,27 @@
   import { LinkCreateDocument } from '$lib/graphql/schema';
 
   const urqlClient = getContextClient();
-  const { handleSubmit, values, errors, isSubmitting } = newForm({
+  const { handleSubmit, values, errors, isSubmitting } = newForm<{
+    url: string;
+    ulid?: string;
+  }>({
     initialValues: {
       url: '',
-      customHash: ''
+      ulid: ''
     },
     validationSchema: Yup.object({
       url: Yup.string().required(),
       hash: Yup.string()
     }),
-    onSubmit: async ({ url, customHash }) => {
-      const payload: { url: string; customHash?: string } = {
+    onSubmit: async ({ url, ulid }) => {
+      const payload: {
+        url: string;
+        ulid?: string;
+      } = {
         url
       };
 
-      if (customHash.length) payload.customHash = customHash;
+      if (ulid?.length) payload.ulid = ulid;
 
       const result = await urqlClient
         .mutation(
@@ -48,7 +54,7 @@
       }
 
       notification.notifySuccess(
-        `The url has been created with the hash: ${result.data?.linkCreate?.link?.id}`
+        `The url has been created with the hash: ${result.data?.linkCreate?.link?.ulid}`
       );
     }
   });
@@ -70,13 +76,13 @@
       </div>
       <div>
         <TextField
-          name="hash"
+          name="ulid"
           type="text"
-          id="hash"
-          label="Hash"
+          id="ulid"
+          label="ULID"
           placeholder="example"
-          bind:value={$values.customHash}
-          error={$errors.customHash}
+          bind:value={$values.ulid}
+          error={$errors.ulid}
         />
       </div>
     </div>
