@@ -1,12 +1,10 @@
-import { TokenCreateDocument, UserCreateDocument } from '$lib/graphql/schema';
-import { createClient } from '@urql/core';
+import { createClient, cacheExchange, fetchExchange } from '@urql/core';
 
-import { parseHeader } from '$lib/utils/basic-auth';
+import { UserCreateDocument } from '$lib/graphql/schema';
+import { createToken } from '$auth/login/+server';
 
 import type { Cookies } from '@sveltejs/kit';
 import type { Client } from '@urql/core';
-import type { AccessToken } from '$lib/graphql/schema';
-import { createToken } from '$auth/login/+server';
 
 export type CreateUserPayload = {
   name: string;
@@ -53,6 +51,7 @@ export const POST = async ({
     const requestBody: CreateUserPayload = await request.json();
     const urqlClient = createClient({
       url: import.meta.env.VITE_GRAPHQL_URL,
+      exchanges: [cacheExchange, fetchExchange],
     });
     await createUser(urqlClient, requestBody);
 

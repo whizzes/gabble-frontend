@@ -1,4 +1,4 @@
-import { createClient } from '@urql/core';
+import { createClient, cacheExchange, fetchExchange } from '@urql/core';
 import { GetCurrentUserDocument } from '$lib/graphql/schema';
 
 import type { Handle } from '@sveltejs/kit';
@@ -41,7 +41,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     const urqlClient = createClient({
       url: import.meta.env.VITE_GRAPHQL_URL,
+      exchanges: [cacheExchange, fetchExchange],
     });
+
     const userDetials = await getUserDetails(urqlClient, accessToken);
 
     if (userDetials && accessToken) {
