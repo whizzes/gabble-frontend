@@ -7,7 +7,7 @@ import type { User } from '$lib/graphql/schema';
 
 async function getUserDetails(
   urqlClient: Client,
-  accessToken: string
+  accessToken: string,
 ): Promise<User> {
   const response = await urqlClient
     .query(
@@ -17,10 +17,10 @@ async function getUserDetails(
         requestPolicy: 'network-only',
         fetchOptions: {
           headers: {
-            Authorization: `JWT ${accessToken}`
-          }
-        }
-      }
+            Authorization: `JWT ${accessToken}`,
+          },
+        },
+      },
     )
     .toPromise();
 
@@ -40,15 +40,13 @@ export const handle: Handle = async ({ event, resolve }) => {
     }
 
     const urqlClient = createClient({
-      url: import.meta.env.VITE_GRAPHQL_URL
+      url: import.meta.env.VITE_GRAPHQL_URL,
     });
     const userDetials = await getUserDetails(urqlClient, accessToken);
 
     if (userDetials && accessToken) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (event.locals as any).accessToken = accessToken;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (event.locals as any).user = userDetials;
+      (event.locals as App.PageData).accessToken = accessToken;
+      (event.locals as App.PageData).user = userDetials;
     }
 
     return await resolve(event);

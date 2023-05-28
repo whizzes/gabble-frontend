@@ -11,18 +11,18 @@ import { LoginError } from './shared';
 export async function createToken(
   urqlClient: Client,
   email: string,
-  password: string
+  password: string,
 ): Promise<AccessToken> {
   const response = await urqlClient
     .mutation(
       TokenCreateDocument,
       {
         email,
-        password
+        password,
       },
       {
-        requestPolicy: 'network-only'
-      }
+        requestPolicy: 'network-only',
+      },
     )
     .toPromise();
 
@@ -41,7 +41,7 @@ export async function createToken(
 
 export const POST = async ({
   cookies,
-  request
+  request,
 }: {
   cookies: Cookies;
   request: Request;
@@ -53,16 +53,16 @@ export const POST = async ({
       return new Response(
         JSON.stringify({
           error: LoginError.MissingCredentials,
-          message: 'Missing username and/or password credentials'
+          message: 'Missing username and/or password credentials',
         }),
         {
-          status: 422
-        }
+          status: 422,
+        },
       );
     }
 
     const urqlClient = createClient({
-      url: import.meta.env.VITE_GRAPHQL_URL
+      url: import.meta.env.VITE_GRAPHQL_URL,
     });
     const tokens = await createToken(urqlClient, username, password);
 
@@ -73,11 +73,11 @@ export const POST = async ({
         sameSite: 'strict',
         secure: process.env.NODE_ENV === 'production',
         // Expires in a month
-        maxAge: 60 * 60 * 24 * 30
+        maxAge: 60 * 60 * 24 * 30,
       });
 
       return new Response(null, {
-        status: 201
+        status: 201,
       });
     }
   } catch (err) {
@@ -86,11 +86,11 @@ export const POST = async ({
     return new Response(
       JSON.stringify({
         error: (err as { message: string; code: string })?.code,
-        message: (err as { message: string; code: string })?.message
+        message: (err as { message: string; code: string })?.message,
       }),
       {
-        status: 500
-      }
+        status: 500,
+      },
     );
   }
 };

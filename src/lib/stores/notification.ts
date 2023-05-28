@@ -15,9 +15,9 @@ export type NotificationStore = {
 };
 
 export enum NotificationKind {
-  Failure,
-  Success,
-  Warning
+  Failure = 0,
+  Success = 1,
+  Warning = 2,
 }
 
 export type Notification = {
@@ -33,7 +33,7 @@ const DEFAULT_TIMEOUT_SECONDS = 5;
 export function createNotificationStore() {
   const timeouts: Record<string, NodeJS.Timeout> = {};
   const notificationStore = writable<NotificationStore>({
-    notifications: {}
+    notifications: {},
   });
   const { subscribe, update } = notificationStore;
 
@@ -42,13 +42,13 @@ export function createNotificationStore() {
   const newNotification = (
     kind: NotificationKind,
     message: string,
-    title?: string
+    title?: string,
   ): Notification => ({
     id: newId(),
     time: Math.floor(Date.now() / 1000),
     kind,
     title,
-    message
+    message,
   });
 
   const close = (id: string): void => {
@@ -58,7 +58,7 @@ export function createNotificationStore() {
       delete notifications[id];
       return {
         ...current,
-        notifications
+        notifications,
       };
     });
   };
@@ -75,7 +75,7 @@ export function createNotificationStore() {
       notifications[notification.id] = notification;
       return {
         ...current,
-        notifications
+        notifications,
       };
     });
   };
@@ -92,17 +92,17 @@ export function createNotificationStore() {
 
   const notifySuccess = (message: string, title?: string) =>
     appendWithTimeout(
-      newNotification(NotificationKind.Success, message, title || 'Success')
+      newNotification(NotificationKind.Success, message, title || 'Success'),
     );
 
   const notifyFailure = (message: string, title?: string) =>
     appendWithTimeout(
-      newNotification(NotificationKind.Failure, message, title || 'Error')
+      newNotification(NotificationKind.Failure, message, title || 'Error'),
     );
 
   const notifyWarning = (message: string, title?: string) =>
     appendWithTimeout(
-      newNotification(NotificationKind.Warning, message, title || 'Warning')
+      newNotification(NotificationKind.Warning, message, title || 'Warning'),
     );
 
   const sorted = () => {
@@ -118,7 +118,7 @@ export function createNotificationStore() {
     subscribe,
     notifySuccess,
     notifyFailure,
-    notifyWarning
+    notifyWarning,
   };
 }
 
