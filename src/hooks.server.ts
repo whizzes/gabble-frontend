@@ -45,10 +45,8 @@ export const handle: Handle = async ({ event, resolve }) => {
     const userDetials = await getUserDetails(urqlClient, accessToken);
 
     if (userDetials && accessToken) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (event.locals as any).accessToken = accessToken;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (event.locals as any).user = userDetials;
+      (event.locals as App.PageData).accessToken = accessToken;
+      (event.locals as App.PageData).user = userDetials;
     }
 
     return await resolve(event);
