@@ -4,7 +4,7 @@ import type { CurrentUserFragment } from '$lib/graphql/schema';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = ({
-  locals
+  locals,
 }: {
   locals: {
     accessToken?: string;
@@ -17,6 +17,6 @@ export const load: LayoutServerLoad = ({
 
   return {
     accessToken: locals.accessToken,
-    user: locals.user
+    user: locals.user,
   };
 };

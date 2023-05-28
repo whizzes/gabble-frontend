@@ -17,15 +17,15 @@ export type CreateUserPayload = {
 
 async function createUser(
   urqlClient: Client,
-  payload: CreateUserPayload
+  payload: CreateUserPayload,
 ): Promise<{ id: string }> {
   const response = await urqlClient
     .mutation(
       UserCreateDocument,
       { input: payload },
       {
-        requestPolicy: 'network-only'
-      }
+        requestPolicy: 'network-only',
+      },
     )
     .toPromise();
 
@@ -44,7 +44,7 @@ async function createUser(
 
 export const POST = async ({
   cookies,
-  request
+  request,
 }: {
   cookies: Cookies;
   request: Request;
@@ -52,14 +52,14 @@ export const POST = async ({
   try {
     const requestBody: CreateUserPayload = await request.json();
     const urqlClient = createClient({
-      url: import.meta.env.VITE_GRAPHQL_URL
+      url: import.meta.env.VITE_GRAPHQL_URL,
     });
     await createUser(urqlClient, requestBody);
 
     const tokens = await createToken(
       urqlClient,
       requestBody.email,
-      requestBody.password
+      requestBody.password,
     );
 
     if (tokens.accessToken) {
@@ -69,21 +69,21 @@ export const POST = async ({
         sameSite: 'strict',
         secure: process.env.NODE_ENV === 'production',
         // Expires in a month
-        maxAge: 60 * 60 * 24 * 30
+        maxAge: 60 * 60 * 24 * 30,
       });
 
       return new Response(null, {
-        status: 201
+        status: 201,
       });
     }
 
     return new Response(
       JSON.stringify({
-        message: 'Invalid Credentials'
+        message: 'Invalid Credentials',
       }),
       {
-        status: 403
-      }
+        status: 403,
+      },
     );
   } catch (err) {
     console.error(err);
@@ -91,11 +91,11 @@ export const POST = async ({
     return new Response(
       JSON.stringify({
         message: 'Internal Server Error',
-        error: (err as { message: string })?.message
+        error: (err as { message: string })?.message,
       }),
       {
-        status: 500
-      }
+        status: 500,
+      },
     );
   }
 };

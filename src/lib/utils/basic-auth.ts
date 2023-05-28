@@ -46,7 +46,7 @@ export function parseHeader(request: Request): Credentials {
 
   if (!header) {
     throw new TypeError(
-      '"request" headers doesn\'t include an Authorization key pair'
+      '"request" headers doesn\'t include an Authorization key pair',
     );
   }
 
@@ -60,13 +60,13 @@ export function decodeBase64(str: string) {
 export function getAuthorizationHeader(request: Request): string | null {
   if (!request.headers || typeof request.headers !== 'object') {
     throw new TypeError(
-      'argument "request" must be an object with the "headers" field'
+      'argument "request" must be an object with the "headers" field',
     );
   }
 
   if (typeof request.headers.get !== 'function') {
     throw new TypeError(
-      'Missing "get" function for "Headers" on "Request.headers"'
+      'Missing "get" function for "Headers" on "Request.headers"',
     );
   }
 
@@ -82,7 +82,7 @@ function parse(authorization: string): Credentials {
 
   if (!matches) {
     throw new TypeError(
-      "The provided Authorization Header doesn't follows HTTP Basic Authentication"
+      "The provided Authorization Header doesn't follows HTTP Basic Authentication",
     );
   }
 
@@ -94,6 +94,6 @@ function parse(authorization: string): Credentials {
 
   return {
     username: creds[1],
-    password: creds[2]
+    password: creds[2],
   };
 }
