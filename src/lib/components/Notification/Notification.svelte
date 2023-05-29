@@ -1,7 +1,6 @@
 <script lang="ts">
   import { NotificationKind } from '@whizzes/svelte-notifications';
   import classNames from 'classnames';
-  
   import Check from '~icons/custom/check';
   import Close from '~icons/custom/close';
   import Warning from '~icons/custom/warning';
