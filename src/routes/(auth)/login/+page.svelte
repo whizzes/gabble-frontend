@@ -1,12 +1,12 @@
 <script lang="ts">
   import { newForm } from '@whizzes/svelte-forms';
   import * as Yup from 'yup';
+  import { notifications } from '@whizzes/svelte-notifications';
 
   import { createHeader } from '$lib/utils/basic-auth';
   import TextField from '$lib/components/TextField.svelte';
   import Card from '$lib/components/Card.svelte';
   import Button from '$lib/components/Button.svelte';
-  import notification from '$lib/stores/notification';
   import { LoginError, type ErrorMessages } from './shared';
   import { UserErrorCode } from '$lib/graphql/schema';
 
@@ -35,7 +35,7 @@
       });
 
       if (response.ok) {
-        notification.notifySuccess('Logged in successfully');
+        notifications.notifySuccess('Logged in successfully');
         window.location.pathname = '/';
       } else {
         const data = await response.json();
@@ -44,7 +44,7 @@
           errorMessages[data.error as keyof typeof errorMessages] ||
           'An error occurred. Please try again later.';
 
-        notification.notifyFailure(errorMessage);
+        notifications.notifyFailure(errorMessage);
       }
     }
   });

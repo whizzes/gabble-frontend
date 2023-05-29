@@ -2,9 +2,10 @@
   import { cacheExchange, fetchExchange } from '@urql/core';
   import { authExchange } from '@urql/exchange-auth';
   import { createClient, setContextClient } from '@urql/svelte';
+  import {NotificationList, Position} from '@whizzes/svelte-notifications'
   
   import { page } from '$app/stores';
-  import NotificationsList from '$lib/components/Notification/NotificationsList.svelte';
+  import Notification from '$lib/components/Notification/Notification.svelte';
   
   import '../app.css';
 
@@ -53,4 +54,6 @@
 </script>
 
 <slot />
-<NotificationsList />
+<NotificationList position={Position.TopRight} let:notification>
+  <Notification  notification={notification} />
+</NotificationList>
