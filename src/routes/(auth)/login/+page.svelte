@@ -1,6 +1,7 @@
 <script lang="ts">
   import { newForm } from '@whizzes/svelte-forms';
   import * as Yup from 'yup';
+  import { notifications } from '@whizzes/svelte-notifications';
 
   import { createHeader } from '$lib/utils/basic-auth';
   import TextField from '$lib/components/TextField.svelte';
@@ -8,7 +9,6 @@
   import Button from '$lib/components/Button.svelte';
   import { LoginError, type ErrorMessages } from './shared';
   import { UserErrorCode } from '$lib/graphql/schema';
-  import { notifications } from '@whizzes/svelte-notifications';
 
   const errorMessages: ErrorMessages = {
     [LoginError.MissingCredentials]: 'Please enter your email and password',
