@@ -1,17 +1,21 @@
 <script lang="ts">
+  import { NotificationKind } from '@whizzes/svelte-notifications';
+  import type { Notification } from '@whizzes/svelte-notifications'
   import classNames from 'classnames';
 
   import Check from '~icons/custom/check';
   import Close from '~icons/custom/close';
   import Warning from '~icons/custom/warning';
 
-  import notificationStore, {
-    NotificationKind
-  } from '$lib/stores/notification';
 
-  import type { Notification } from '$lib/stores/notification';
+  // import notificationStore, {
+  //   NotificationKind
+  // } from '$lib/stores/notification';
 
-  export let notification: Notification;
+  // import type { Notification } from '$lib/stores/notification';
+
+  export let notification:Notification
+  
 
   let notificationClass: string;
   let figureClass: string;
@@ -51,10 +55,10 @@
     <span class="font-semibold">{notification.title}</span>
     <p>{notification.message}</p>
   </div>
-  <button
+  <!-- <button
     on:click={() => notificationStore.close(notification.id)}
     class="flex justify-center items-center h-[24px] w-[24px] p-1 rounded-full hover:text-gray-400 cursor-pointer"
   >
     <Close class="h-6 w-6" />
-  </button>
+  </button> -->
 </li>

@@ -7,8 +7,8 @@
   import Button from '$lib/components/Button.svelte';
   import Card from '$lib/components/Card.svelte';
   import TextField from '$lib/components/TextField.svelte';
-  import notification from '$lib/stores/notification';
   import { LinkCreateDocument } from '$lib/graphql/schema';
+  import { notifications } from '@whizzes/svelte-notifications';
 
   const urqlClient = getContextClient();
   const { handleSubmit, values, errors, isSubmitting } = newForm<{
@@ -48,12 +48,12 @@
         .toPromise();
 
       if (result.error || result.data?.linkCreate?.error) {
-        return notification.notifyFailure(
+        return notifications.notifyFailure(
           result.data?.linkCreate?.error?.message
         );
       }
 
-      notification.notifySuccess(
+      notifications.notifySuccess(
         `The url has been created with the hash: ${result.data?.linkCreate?.link?.ulid}`
       );
     }
