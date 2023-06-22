@@ -1,5 +1,5 @@
 import { TokenCreateDocument } from '$lib/graphql/schema';
-import { createClient } from '@urql/core';
+import { createClient, cacheExchange, fetchExchange } from '@urql/core';
 
 import { parseHeader } from '$lib/utils/basic-auth';
 
@@ -63,6 +63,7 @@ export const POST = async ({
 
     const urqlClient = createClient({
       url: import.meta.env.VITE_GRAPHQL_URL,
+      exchanges: [cacheExchange, fetchExchange],
     });
     const tokens = await createToken(urqlClient, username, password);
 

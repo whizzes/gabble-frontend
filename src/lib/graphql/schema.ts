@@ -1,64 +1,26 @@
 import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-  DateTime: any;
+  ID: { input: string | number; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  DateTime: { input: any; output: any; }
 };
 
 export type AccessToken = {
   __typename?: 'AccessToken';
-  accessToken: Scalars['String'];
+  accessToken: Scalars['String']['output'];
 };
-
-/** A Link record used to redirect to the underlying `original_url` */
-export type Link = {
-  __typename?: 'Link';
-  createdAt: Scalars['DateTime'];
-  deletedAt?: Maybe<Scalars['DateTime']>;
-  id: Scalars['ID'];
-  originalUrl: Scalars['String'];
-  ulid: Scalars['String'];
-  updatedAt: Scalars['DateTime'];
-};
-
-export type LinkCreate = {
-  __typename?: 'LinkCreate';
-  error?: Maybe<LinkError>;
-  link?: Maybe<Link>;
-};
-
-export type LinkCreateInput = {
-  ulid?: InputMaybe<Scalars['String']>;
-  url: Scalars['String'];
-};
-
-export type LinkError = {
-  __typename?: 'LinkError';
-  code: LinkErrorCode;
-  message: Scalars['String'];
-};
-
-export enum LinkErrorCode {
-  Internal = 'INTERNAL',
-  Pxid = 'PXID',
-  UlidParse = 'ULID_PARSE'
-}
 
 export type Me = {
   __typename?: 'Me';
@@ -68,19 +30,16 @@ export type Me = {
 
 export type MutationRoot = {
   __typename?: 'MutationRoot';
-  linkCreate: LinkCreate;
   tokenCreate: TokenCreate;
   userRegister: UserRegister;
 };
 
-export type MutationRootLinkCreateArgs = {
-  input: LinkCreateInput;
-};
 
 export type MutationRootTokenCreateArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
 };
+
 
 export type MutationRootUserRegisterArgs = {
   input: UserRegisterInput;
@@ -100,23 +59,19 @@ export type TokenCreate = {
 /** A Platform's User */
 export type User = {
   __typename?: 'User';
-  createdAt: Scalars['DateTime'];
-  email: Scalars['String'];
-  id: Scalars['ID'];
-  /**
-   * Retrieves links for `User` instance, if and only if the `User` instance
-   * belongs to the currently authenticated user.
-   */
-  links: Array<Link>;
-  name: Scalars['String'];
-  surname: Scalars['String'];
-  updatedAt: Scalars['DateTime'];
+  createdAt: Scalars['DateTime']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  surname: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type UserError = {
   __typename?: 'UserError';
   code: UserErrorCode;
-  message: Scalars['String'];
+  message: Scalars['String']['output'];
 };
 
 export enum UserErrorCode {
@@ -133,210 +88,78 @@ export type UserRegister = {
 };
 
 export type UserRegisterInput = {
-  email: Scalars['String'];
-  name: Scalars['String'];
-  password: Scalars['String'];
-  surname: Scalars['String'];
+  email: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  surname: Scalars['String']['input'];
+  username: Scalars['String']['input'];
 };
 
-export type LinkCreateMutationVariables = Exact<{
-  input: LinkCreateInput;
-}>;
+export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type LinkCreateMutation = {
-  __typename?: 'MutationRoot';
-  linkCreate: {
-    __typename?: 'LinkCreate';
-    link?: {
-      __typename?: 'Link';
-      id: string;
-      ulid: string;
-      originalUrl: string;
-    } | null;
-    error?: {
-      __typename?: 'LinkError';
-      code: LinkErrorCode;
-      message: string;
-    } | null;
-  };
-};
 
-export type CreatedLinkFragment = {
-  __typename?: 'Link';
-  id: string;
-  ulid: string;
-  originalUrl: string;
-};
+export type GetCurrentUserQuery = { __typename?: 'QueryRoot', me: { __typename?: 'Me', user?: { __typename?: 'User', id: string, name: string, surname: string, email: string, username: string, createdAt: any, updatedAt: any } | null } };
 
-export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetCurrentUserQuery = {
-  __typename?: 'QueryRoot';
-  me: {
-    __typename?: 'Me';
-    user?: {
-      __typename?: 'User';
-      id: string;
-      name: string;
-      surname: string;
-      email: string;
-      createdAt: any;
-      updatedAt: any;
-      links: Array<{
-        __typename?: 'Link';
-        id: string;
-        ulid: string;
-        originalUrl: string;
-        createdAt: any;
-        updatedAt: any;
-        deletedAt?: any | null;
-      }>;
-    } | null;
-  };
-};
-
-export type CurrentUserFragment = {
-  __typename?: 'User';
-  id: string;
-  name: string;
-  surname: string;
-  email: string;
-  createdAt: any;
-  updatedAt: any;
-  links: Array<{
-    __typename?: 'Link';
-    id: string;
-    ulid: string;
-    originalUrl: string;
-    createdAt: any;
-    updatedAt: any;
-    deletedAt?: any | null;
-  }>;
-};
-
-export type UserLinksFragment = {
-  __typename?: 'Link';
-  id: string;
-  ulid: string;
-  originalUrl: string;
-  createdAt: any;
-  updatedAt: any;
-  deletedAt?: any | null;
-};
+export type CurrentUserFragment = { __typename?: 'User', id: string, name: string, surname: string, email: string, username: string, createdAt: any, updatedAt: any };
 
 export type TokenCreateMutationVariables = Exact<{
-  email: Scalars['String'];
-  password: Scalars['String'];
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
 }>;
 
-export type TokenCreateMutation = {
-  __typename?: 'MutationRoot';
-  tokenCreate: {
-    __typename?: 'TokenCreate';
-    token?: { __typename?: 'AccessToken'; accessToken: string } | null;
-    error?: {
-      __typename?: 'UserError';
-      code: UserErrorCode;
-      message: string;
-    } | null;
-  };
-};
+
+export type TokenCreateMutation = { __typename?: 'MutationRoot', tokenCreate: { __typename?: 'TokenCreate', token?: { __typename?: 'AccessToken', accessToken: string } | null, error?: { __typename?: 'UserError', code: UserErrorCode, message: string } | null } };
 
 export type UserCreateMutationVariables = Exact<{
   input: UserRegisterInput;
 }>;
 
-export type UserCreateMutation = {
-  __typename?: 'MutationRoot';
-  userRegister: {
-    __typename?: 'UserRegister';
-    user?: { __typename?: 'User'; id: string } | null;
-    error?: {
-      __typename?: 'UserError';
-      code: UserErrorCode;
-      message: string;
-    } | null;
-  };
-};
 
-export const CreatedLinkFragmentDoc = gql`
-  fragment CreatedLink on Link {
-    id
-    ulid
-    originalUrl
-  }
-`;
-export const UserLinksFragmentDoc = gql`
-  fragment UserLinks on Link {
-    id
-    ulid
-    originalUrl
-    createdAt
-    updatedAt
-    deletedAt
-  }
-`;
+export type UserCreateMutation = { __typename?: 'MutationRoot', userRegister: { __typename?: 'UserRegister', user?: { __typename?: 'User', id: string } | null, error?: { __typename?: 'UserError', code: UserErrorCode, message: string } | null } };
+
 export const CurrentUserFragmentDoc = gql`
-  fragment CurrentUser on User {
-    id
-    name
-    surname
-    email
-    createdAt
-    updatedAt
-    links {
-      ...UserLinks
-    }
-  }
-  ${UserLinksFragmentDoc}
-`;
-export const LinkCreateDocument = gql`
-  mutation linkCreate($input: LinkCreateInput!) {
-    linkCreate(input: $input) {
-      link {
-        ...CreatedLink
-      }
-      error {
-        code
-        message
-      }
-    }
-  }
-  ${CreatedLinkFragmentDoc}
-`;
+    fragment CurrentUser on User {
+  id
+  name
+  surname
+  email
+  username
+  createdAt
+  updatedAt
+}
+    `;
 export const GetCurrentUserDocument = gql`
-  query GetCurrentUser {
-    me {
-      user {
-        ...CurrentUser
-      }
+    query GetCurrentUser {
+  me {
+    user {
+      ...CurrentUser
     }
   }
-  ${CurrentUserFragmentDoc}
-`;
+}
+    ${CurrentUserFragmentDoc}`;
 export const TokenCreateDocument = gql`
-  mutation TokenCreate($email: String!, $password: String!) {
-    tokenCreate(email: $email, password: $password) {
-      token {
-        accessToken
-      }
-      error {
-        code
-        message
-      }
+    mutation TokenCreate($email: String!, $password: String!) {
+  tokenCreate(email: $email, password: $password) {
+    token {
+      accessToken
+    }
+    error {
+      code
+      message
     }
   }
-`;
+}
+    `;
 export const UserCreateDocument = gql`
-  mutation UserCreate($input: UserRegisterInput!) {
-    userRegister(input: $input) {
-      user {
-        id
-      }
-      error {
-        code
-        message
-      }
+    mutation UserCreate($input: UserRegisterInput!) {
+  userRegister(input: $input) {
+    user {
+      id
+    }
+    error {
+      code
+      message
     }
   }
-`;
+}
+    `;
