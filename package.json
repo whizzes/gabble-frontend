@@ -29,7 +29,6 @@
     "@urql/core": "^4.0.7",
     "@urql/exchange-auth": "^2.1.2",
     "@urql/svelte": "^4.0.1",
-    "@whizzes/exo": "^0.0.6",
     "@whizzes/svelte-forms": "^0.2.0",
     "@whizzes/svelte-notifications": "^0.1.4",
     "@whizzes/exo": "file:../exo",
