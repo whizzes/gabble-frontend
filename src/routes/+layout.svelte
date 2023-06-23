@@ -6,7 +6,8 @@
   
   import { page } from '$app/stores';
   import Notification from '$lib/components/Notification/Notification.svelte';
-  
+
+  import '@whizzes/exo/dist/styles.css';
   import '../app.css';
 
   const initializeAuthState = () => {
@@ -53,7 +54,9 @@
   setContextClient(client);
 </script>
 
-<slot />
+<div class="background-light">
+  <slot />
+</div>
 <NotificationList position={Position.TopRight} let:notification>
   <Notification  notification={notification} />
 </NotificationList>
