@@ -1,5 +1,5 @@
 {
-  "name": "linx-dashboard",
+  "name": "gabble-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -32,6 +32,7 @@
     "@whizzes/exo": "^0.0.6",
     "@whizzes/svelte-forms": "^0.2.0",
     "@whizzes/svelte-notifications": "^0.1.4",
+    "@whizzes/exo": "file:../exo",
     "autoprefixer": "^10.4.14",
     "classnames": "^2.3.2",
     "graphql": "^16.6.0",

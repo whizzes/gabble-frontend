@@ -14,18 +14,20 @@
     initialValues: {
       name: '',
       surname: '',
+      username: '',
       email: '',
-      password: ''
+      password: '',
     },
     validationSchema: Yup.object({
       name: Yup.string().required(),
       email: Yup.string().email().required(),
-      password: Yup.string().required()
+      username: Yup.string().matches(/^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$/),
+      password: Yup.string().required(),
     }),
     onSubmit: async (values) => {
       const response = await fetch('/signup', {
         method: 'POST',
-        body: JSON.stringify(values)
+        body: JSON.stringify(values),
       });
 
       if (response.ok) {
@@ -34,7 +36,7 @@
       } else {
         notifications.notifyFailure('Error creating account, please try again');
       }
-    }
+    },
   });
 </script>
 
@@ -73,6 +75,15 @@
           label="Last name"
           bind:value={$values.surname}
           error={$errors.surname}
+        />
+        <TextField
+          id="username"
+          name="username"
+          type="text"
+          placeholder="E.g. johndoe"
+          label="Username"
+          bind:value={$values.username}
+          error={$errors.username}
         />
         <TextField
           id="email"
