@@ -3,9 +3,7 @@
   import * as Yup from 'yup';
   import { notifications } from '@whizzes/svelte-notifications';
 
-  import TextField from '$lib/components/TextField.svelte';
-  import Card from '$lib/components/Card.svelte';
-  import Button from '$lib/components/Button.svelte';
+  import { Button, Card, TextField } from '@whizzes/exo';
 
   let userCreatedOk = false;
   let error: string | null = null;
@@ -14,14 +12,12 @@
     initialValues: {
       name: '',
       surname: '',
-      username: '',
       email: '',
       password: '',
     },
     validationSchema: Yup.object({
       name: Yup.string().required(),
       email: Yup.string().email().required(),
-      username: Yup.string().matches(/^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$/),
       password: Yup.string().required(),
     }),
     onSubmit: async (values) => {
@@ -59,7 +55,6 @@
         on:submit={handleSubmit}
       >
         <TextField
-          id="name"
           name="name"
           type="text"
           placeholder="E.g. John"
@@ -68,7 +63,6 @@
           error={$errors.name}
         />
         <TextField
-          id="surname"
           name="surname"
           type="text"
           placeholder="E.g. Appleseed"
@@ -77,16 +71,6 @@
           error={$errors.surname}
         />
         <TextField
-          id="username"
-          name="username"
-          type="text"
-          placeholder="E.g. johndoe"
-          label="Username"
-          bind:value={$values.username}
-          error={$errors.username}
-        />
-        <TextField
-          id="email"
           name="email"
           type="email"
           placeholder="E.g. user@email.com"
@@ -96,7 +80,6 @@
         />
         <TextField
           type="password"
-          id="password"
           name="password"
           label="Password"
           placeholder="• • • • • • • •"
@@ -104,7 +87,7 @@
           error={$errors.password}
         />
 
-        <Button type="submit" disabled={$isSubmitting}>Create Account</Button>
+        <Button type="submit" label="Create Account" />
         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
           Already have an account? <a
             href="/login"
