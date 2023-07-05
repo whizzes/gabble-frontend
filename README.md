@@ -1,7 +1,9 @@
+> **Warning** This project now lives on https://github.com/whizzes/gabble
+
 <div>
-  <h1 align="center">Quicklink Dashboard</h1>
+  <h1 align="center">Gabble Frontend</h1>
   <h4 align="center">
-    Dashboard for Quicklink a Headless URL Shortener written in Rust
+    A "Host Yourself" Chat powered by Rust and Whizzes Contributors
   </h4>
 </div>
 
